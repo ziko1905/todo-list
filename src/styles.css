@@ -6,3 +6,7 @@
     --secondary-clr: #22c55e;
     --tertiary-clr: #166534;
 }
+
+body {
+    background-color: var(--white);
+}
