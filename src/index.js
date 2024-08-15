@@ -10,3 +10,11 @@ class Task {
         this.check = check;
     }
 }
+
+class Project {
+    constructor(title, description) {
+        this.title = title; 
+        this.description = description;
+        this.tasks = [];
+    }
+}
