@@ -36,3 +36,11 @@ nav {
 .card:hover {
     background-color: #dcfce7;
 }
+
+#add {
+    padding: 10px;
+
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
