@@ -1,4 +1,5 @@
 import "./styles.css"
+import { createNav } from "./load";
 
 class Task {
     constructor(title, description, date, priority, notes, check) {
@@ -18,3 +19,5 @@ class Project {
         this.tasks = [];
     }
 }
+
+createNav()
