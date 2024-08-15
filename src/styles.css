@@ -1,1 +1,8 @@
 @import '../node_modules/modern-normalize/modern-normalize.css';
+
+:root {
+    --white: #ecfdf5;
+    --primary-clr: #86efac;
+    --secondary-clr: #22c55e;
+    --tertiary-clr: #166534;
+}
