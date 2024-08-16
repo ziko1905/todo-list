@@ -38,9 +38,17 @@ nav {
 }
 
 #add {
-    padding: 10px;
+    box-sizing: border-box;
+    width: 80px;
+    height: 80px;
+    padding-bottom: 7px;
+    font-size: 4rem;
+    background-color: var(--secondary-clr);
+    color: var(--quaternary-clr);
+    border: none;
+    border-radius: 1000px;
 
     position: absolute;
-    right: 20px;
-    bottom: 20px;
+    right: 40px;
+    bottom: 40px;
 }
