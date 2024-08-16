@@ -14,6 +14,15 @@ export function createNav() {
 
 export function popUp(type) {
     const popDiv = document.createElement("div")
-    popDiv.id = "pop"
+    const form = document.createElement("form");
+    popDiv.className = "pop";
+
+    if (type = "task") {
+        form.className = "task";
+    }
+    else {
+        form.popDiv.className = "task";
+    }
+
     document.body.appendChild(popDiv)
 }
