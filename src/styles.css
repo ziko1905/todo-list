@@ -61,8 +61,27 @@ nav {
     margin: 150px auto;
     border: 4px solid var(--secondary-clr);
     border-radius: 20px;
+    padding: 40px;
 
     position: absolute;
     inset: 0;
-    
+}
+
+.pop form {
+    font-size: 2rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px 20px; 
+}
+
+.desc {
+    grid-column: 1 / -1;
+}
+
+.priorities {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    grid-column: 1 / -1
 }
