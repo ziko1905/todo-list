@@ -1,5 +1,5 @@
 import "./styles.css"
-import { createNav } from "./load";
+import { createNav, popUp } from "./load";
 
 class Task {
     constructor(title, description, date, priority, notes, check) {
@@ -21,3 +21,4 @@ class Project {
 }
 
 createNav()
+popUp()

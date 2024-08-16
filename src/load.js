@@ -1,3 +1,5 @@
+const content = document.querySelector(".content")
+
 export function createNav() {
     const nav = document.querySelector("nav");
     let cards = [];
@@ -8,4 +10,10 @@ export function createNav() {
         cards.push(card);
         nav.appendChild(card);
     }
+}
+
+export function popUp(type) {
+    const popDiv = document.createElement("div")
+    popDiv.id = "pop"
+    document.body.appendChild(popDiv)
 }
