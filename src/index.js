@@ -21,4 +21,5 @@ class Project {
 }
 
 createNav()
-PopUp.createCommon("task");
+const elem = PopUp.createCommon("task");
+console.log(elem)

@@ -56,6 +56,30 @@ export const PopUp = (function () {
             legend.textContent += "Project";
         }
 
+        const submitBtn = document.createElement("button");
+        const cancelBtn = document.createElement("button");
+        const btnsDiv = document.createElement("div");
+
+        submitBtn.textContent = "Add";
+        submitBtn.className = "submit-btn";
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.className = "cancel-btn";
+
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            popDiv.remove()
+            return new FormData(form)
+        })
+
+        cancelBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            popDiv.remove()
+        })
+
+        btnsDiv.appendChild(submitBtn);
+        btnsDiv.appendChild(cancelBtn);
+        form.append(btnsDiv);
+
         popDiv.appendChild(legend);
         popDiv.appendChild(form);
         document.body.appendChild(popDiv);
