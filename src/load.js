@@ -12,45 +12,59 @@ export function createNav() {
     }
 }
 
-export function popUp(type) {
-    const popDiv = document.createElement("div");
+export const PopUp = (function () {
     const form = document.createElement("form");
-    const legend = document.createElement("legend");
-    const titleLabel = document.createElement("label");
-    const titleInput = document.createElement("input");
-    const descDiv = document.createElement("div");
-    const descLabel = document.createElement("label");
-    const description = document.createElement("textarea");
+    function createCommon(type) {
+        const popDiv = document.createElement("div");
+        const legend = document.createElement("legend");
+        const titleLabel = document.createElement("label");
+        const titleInput = document.createElement("input");
+        const descDiv = document.createElement("div");
+        const descLabel = document.createElement("label");
+        const description = document.createElement("textarea");
 
-    legend.textContent = "Add "
-    popDiv.className = "pop";
-    titleLabel.textContent = "Name: "; 
-    titleLabel.setAttribute("for", "title");
-    titleLabel.className = "title-lab";
-    titleInput.id = "title";
-    titleInput.setAttribute("name", "title");
-    titleInput.className = "title-inp";
-    descDiv.className = "desc-div";
-    descLabel.textContent = "Description: ";
-    descLabel.setAttribute("for", "description");
-    description.className = "desc";
-    description.id = "description";
-    description.name = "description";
+        legend.textContent = "Add "
+        popDiv.className = "pop";
+        titleLabel.textContent = "Name: "; 
+        titleLabel.setAttribute("for", "title");
+        titleLabel.className = "title-lab";
+        titleInput.id = "title";
+        titleInput.setAttribute("name", "title");
+        titleInput.className = "title-inp";
+        descDiv.className = "desc-div";
+        descLabel.textContent = "Description: ";
+        descLabel.setAttribute("for", "description");
+        description.className = "desc";
+        description.id = "description";
+        description.name = "description";
 
-    descDiv.appendChild(descLabel);
-    descDiv.appendChild(description);
+        descDiv.appendChild(descLabel);
+        descDiv.appendChild(description);
 
-    form.appendChild(titleLabel);
-    form.appendChild(titleInput);
-    form.appendChild(descDiv);
+        form.appendChild(titleLabel);
+        form.appendChild(titleInput);
+        form.appendChild(descDiv);
 
 
-    if (type == "task") {
-        form.className = "task";
+        if (type == "task") {
+            form.className = "task";
+            legend.textContent += "Task";
+            taskPopUp()
+        }
+        else {
+            form.className = "project";
+            legend.textContent += "Project";
+        }
+
+        popDiv.appendChild(legend);
+        popDiv.appendChild(form);
+        document.body.appendChild(popDiv);
+    }
+
+    function taskPopUp() {
         const dateLabel = document.createElement("label");
         const date = document.createElement("input");
 
-        legend.textContent += "Task";
         dateLabel.setAttribute("for", "date");
         dateLabel.textContent = "Date: "
         date.id = "date";
@@ -81,12 +95,5 @@ export function popUp(type) {
         }
         form.appendChild(priorities);
     }
-    else {
-        form.className = "project";
-        legend.textContent += "Project";
-    }
-
-    popDiv.appendChild(legend);
-    popDiv.appendChild(form);
-    document.body.appendChild(popDiv);
-}
+    return { createCommon }
+})()

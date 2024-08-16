@@ -1,5 +1,5 @@
 import "./styles.css"
-import { createNav, popUp } from "./load";
+import { createNav, PopUp } from "./load";
 
 class Task {
     constructor(title, description, date, priority, notes, check) {
@@ -21,4 +21,4 @@ class Project {
 }
 
 createNav()
-popUp("project")
+PopUp.createCommon("task");
