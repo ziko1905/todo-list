@@ -35,9 +35,41 @@ export function popUp(type) {
 
     if (type = "task") {
         form.className = "task";
+        const dateLabel = document.createElement("label");
+        const date = document.createElement("input");
+
+        dateLabel.setAttribute("for", "date");
+        dateLabel.textContent = "Date: "
+        date.id = "date";
+        date.name = "date";
+        date.type = "datetime-local";
+
+        form.appendChild(dateLabel);
+        form.appendChild(date);
+
+        const priorities = document.createElement("div");
+        priorities.className = "priorities";
+        for (let n of ["urgent", "important", "mild"]) {
+            const priorityDiv = document.createElement("div");
+            const label = document.createElement("label");
+            const input = document.createElement("input");
+
+            priorityDiv.className = "priority";
+            label.textContent = n.charAt(0).toLocaleUpperCase() + n.slice(1);
+            label.setAttribute("for", n);
+            input.id = n;
+            input.value = n;
+            input.name = "priority";
+            input.type = "radio"
+
+            priorityDiv.appendChild(input);
+            priorityDiv.appendChild(label);
+            priorities.appendChild(priorityDiv);
+        }
+        form.appendChild(priorities);
     }
     else {
-        form.popDiv.className = "task";
+        form.popDiv.className = "project";
     }
 
     popDiv.appendChild(form)
