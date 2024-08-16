@@ -21,4 +21,4 @@ class Project {
 }
 
 createNav()
-popUp("task")
+popUp("project")

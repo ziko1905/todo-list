@@ -13,14 +13,16 @@ export function createNav() {
 }
 
 export function popUp(type) {
-    const popDiv = document.createElement("div")
+    const popDiv = document.createElement("div");
     const form = document.createElement("form");
+    const legend = document.createElement("legend");
     const titleLabel = document.createElement("label");
     const titleInput = document.createElement("input");
     const descDiv = document.createElement("div");
     const descLabel = document.createElement("label");
     const description = document.createElement("textarea");
 
+    legend.textContent = "Add "
     popDiv.className = "pop";
     titleLabel.textContent = "Name: "; 
     titleLabel.setAttribute("for", "title");
@@ -43,11 +45,12 @@ export function popUp(type) {
     form.appendChild(descDiv);
 
 
-    if (type = "task") {
+    if (type == "task") {
         form.className = "task";
         const dateLabel = document.createElement("label");
         const date = document.createElement("input");
 
+        legend.textContent += "Task";
         dateLabel.setAttribute("for", "date");
         dateLabel.textContent = "Date: "
         date.id = "date";
@@ -79,9 +82,11 @@ export function popUp(type) {
         form.appendChild(priorities);
     }
     else {
-        form.popDiv.className = "project";
+        form.className = "project";
+        legend.textContent += "Project";
     }
 
-    popDiv.appendChild(form)
-    document.body.appendChild(popDiv)
+    popDiv.appendChild(legend);
+    popDiv.appendChild(form);
+    document.body.appendChild(popDiv);
 }
