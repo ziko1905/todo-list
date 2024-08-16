@@ -15,7 +15,23 @@ export function createNav() {
 export function popUp(type) {
     const popDiv = document.createElement("div")
     const form = document.createElement("form");
+    const titleLabel = document.createElement("label");
+    const titleInput = document.createElement("input");
+    const description = document.createElement("textarea");
+
     popDiv.className = "pop";
+    titleLabel.textContent = "Name: "; 
+    titleLabel.setAttribute("for", "title");
+    titleLabel.className = "title-lab";
+    titleInput.id = "title";
+    titleInput.setAttribute("name", "title");
+    titleInput.className = "title-inp";
+    description.className = "desc";
+
+    form.appendChild(titleLabel);
+    form.appendChild(titleInput);
+    form.appendChild(description);
+
 
     if (type = "task") {
         form.className = "task";
@@ -24,5 +40,6 @@ export function popUp(type) {
         form.popDiv.className = "task";
     }
 
+    popDiv.appendChild(form)
     document.body.appendChild(popDiv)
 }
