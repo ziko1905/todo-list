@@ -17,6 +17,8 @@ export function popUp(type) {
     const form = document.createElement("form");
     const titleLabel = document.createElement("label");
     const titleInput = document.createElement("input");
+    const descDiv = document.createElement("div");
+    const descLabel = document.createElement("label");
     const description = document.createElement("textarea");
 
     popDiv.className = "pop";
@@ -26,11 +28,19 @@ export function popUp(type) {
     titleInput.id = "title";
     titleInput.setAttribute("name", "title");
     titleInput.className = "title-inp";
+    descDiv.className = "desc-div";
+    descLabel.textContent = "Description: ";
+    descLabel.setAttribute("for", "description");
     description.className = "desc";
+    description.id = "description";
+    description.name = "description";
+
+    descDiv.appendChild(descLabel);
+    descDiv.appendChild(description);
 
     form.appendChild(titleLabel);
     form.appendChild(titleInput);
-    form.appendChild(description);
+    form.appendChild(descDiv);
 
 
     if (type = "task") {
