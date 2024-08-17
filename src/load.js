@@ -23,12 +23,16 @@ export const Layout = (function () {
     addBtn.className = "new-btn";
     removeBtn.className = "remove-btn";
 
-    function createCommonLayout() {
+    function createCommonLayout(newFunct, removeFunct) {
         mainDiv.remove()
         mainDiv = document.createElement("div");
         const btnsDiv = document.createElement("div");
 
         btnsDiv.className = "btns-div";
+        addBtn.addEventListener("click", (e) => {
+            newFunct()
+            e.target.removeEventListener("click", null)
+        })
 
         btnsDiv.appendChild(addBtn);
         btnsDiv.appendChild(removeBtn);
@@ -38,15 +42,15 @@ export const Layout = (function () {
         content.appendChild(mainDiv)
     }
 
-    function createProjectsLayout() {
-        createCommonLayout()
+    function createProjectsLayout(newFunct, removeFunct) {
+        createCommonLayout(newFunct, removeFunct)
         addBtn.textContent = "New Project";
         removeBtn.textContent = "Remove Project";
         listingDiv.className = "projects-lst";
     }
 
-    function createTasksLayout() {
-        createCommonLayout()
+    function createTasksLayout(newFunct, removeFunct) {
+        createCommonLayout(newFunct, removeFunct)
         addBtn.textContent = "New Task";
         removeBtn.textContent = "Remove Task";
         listingDiv.className = "tasks-lst";
@@ -56,13 +60,13 @@ export const Layout = (function () {
 
 export const PopUp = (function () {
     let form;
+    let legend;
     let _promote;
-    async function createCommon(type) {
-        let returnVal;
-
+    let returnVal;
+    function createCommon() {
         form = document.createElement("form");
+        legend = document.createElement("legend");
         const popDiv = document.createElement("div");
-        const legend = document.createElement("legend");
         const titleLabel = document.createElement("label");
         const titleInput = document.createElement("input");
         const descDiv = document.createElement("div");
@@ -91,17 +95,6 @@ export const PopUp = (function () {
         form.appendChild(titleInput);
         form.appendChild(descDiv);
 
-
-        if (type == "task") {
-            form.className = "task";
-            legend.textContent += "Task";
-            taskPopUp()
-        }
-        else {
-            form.className = "project";
-            legend.textContent += "Project";
-        }
-
         const submitBtn = document.createElement("button");
         const cancelBtn = document.createElement("button");
         const btnsDiv = document.createElement("div");
@@ -116,30 +109,30 @@ export const PopUp = (function () {
             e.preventDefault()
             popDiv.remove()
             returnVal = new FormData(form);
-            _promote(type1);
+            _promote();
         })
 
         cancelBtn.addEventListener("click", (e) => {
             e.preventDefault()
             popDiv.remove()
-            _promote(type1);
+            _promote();
         })
 
         btnsDiv.appendChild(submitBtn);
         btnsDiv.appendChild(cancelBtn);
-        form.append(btnsDiv);
 
         popDiv.appendChild(legend);
         popDiv.appendChild(form);
         document.body.appendChild(popDiv);
 
-        let type1;
-        let promise = new Promise((resolve) => { _promote = resolve });
-        await promise.then((result) => { type1 = result });
-        return returnVal
+        return btnsDiv
     }
 
-    function taskPopUp() {
+    async function createTask() {
+        const btns = createCommon();
+        form.className = "task";
+        legend.textContent += "Task";
+
         const dateLabel = document.createElement("label");
         const date = document.createElement("input");
 
@@ -173,6 +166,26 @@ export const PopUp = (function () {
             priorities.appendChild(priorityDiv);
         }
         form.appendChild(priorities);
+        form.appendChild(btns);
+        // createCommon().then(function (result) {
+        //     form.appendChild(btns);
+        // })
+        let type1;
+        let promise = new Promise((resolve) => { _promote = resolve });
+        await promise.then((result) => { type1 = result });
+        return returnVal
     }
-    return { createCommon }
+
+    async function createProject() {
+        const btns = createCommon();
+        form.appendChild(btns);
+        form.className = "task";
+        legend.textContent += "Task";
+
+        let type1;
+        let promise = new Promise((resolve) => { _promote = resolve });
+        await promise.then((result) => { type1 = result });
+        return returnVal
+    }
+    return { createTask, createProject }
 })()

@@ -21,6 +21,4 @@ class Project {
 }
 
 createNav()
-// const elem = await PopUp.createCommon("task");
-Layout.createTasksLayout()
-// PopUp.createCommon()
+console.log(await PopUp.createTask())
