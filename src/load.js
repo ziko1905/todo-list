@@ -14,7 +14,10 @@ export function createNav() {
 
 export const PopUp = (function () {
     const form = document.createElement("form");
-    function createCommon(type) {
+    let _promote;
+    async function createCommon(type) {
+        let returnVal;
+
         const popDiv = document.createElement("div");
         const legend = document.createElement("legend");
         const titleLabel = document.createElement("label");
@@ -69,12 +72,14 @@ export const PopUp = (function () {
         submitBtn.addEventListener("click", (e) => {
             e.preventDefault()
             popDiv.remove()
-            return new FormData(form)
+            returnVal = new FormData(form);
+            _promote(type1);
         })
 
         cancelBtn.addEventListener("click", (e) => {
             e.preventDefault()
             popDiv.remove()
+            _promote(type1);
         })
 
         btnsDiv.appendChild(submitBtn);
@@ -84,6 +89,11 @@ export const PopUp = (function () {
         popDiv.appendChild(legend);
         popDiv.appendChild(form);
         document.body.appendChild(popDiv);
+
+        let type1;
+        let promise = new Promise((resolve) => { _promote = resolve });
+        await promise.then((result) => { type1 = result });
+        return returnVal
     }
 
     function taskPopUp() {
