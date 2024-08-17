@@ -21,4 +21,5 @@ class Project {
 }
 
 createNav()
-console.log(await PopUp.createTask())
+console.log(await Layout.createProjectsLayout(await PopUp.createProject))
+// console.log(await PopUp.createTask())

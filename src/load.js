@@ -13,6 +13,8 @@ export function createNav() {
 }
 
 export const Layout = (function () {
+    let returnVal;
+    let _promote;
     const content = document.querySelector(".content")
     const addBtn = document.createElement("button")
     const removeBtn = document.createElement("button");
@@ -23,15 +25,16 @@ export const Layout = (function () {
     addBtn.className = "new-btn";
     removeBtn.className = "remove-btn";
 
-    function createCommonLayout(newFunct, removeFunct) {
+    async function createCommonLayout(newFunct, removeFunct) {
         mainDiv.remove()
         mainDiv = document.createElement("div");
         const btnsDiv = document.createElement("div");
 
         btnsDiv.className = "btns-div";
-        addBtn.addEventListener("click", (e) => {
-            newFunct()
+        addBtn.addEventListener("click", async (e) => {
+            returnVal = await newFunct()
             e.target.removeEventListener("click", null)
+            _promote()
         })
 
         btnsDiv.appendChild(addBtn);
@@ -42,18 +45,26 @@ export const Layout = (function () {
         content.appendChild(mainDiv)
     }
 
-    function createProjectsLayout(newFunct, removeFunct) {
-        createCommonLayout(newFunct, removeFunct)
+    async function createProjectsLayout(newFunct, removeFunct) {
+        await createCommonLayout(newFunct, removeFunct)
         addBtn.textContent = "New Project";
         removeBtn.textContent = "Remove Project";
         listingDiv.className = "projects-lst";
+        let type1;
+        let promise = new Promise((resolve) => { _promote = resolve });
+        await promise.then((result) => { type1 = result });
+        return returnVal
     }
 
-    function createTasksLayout(newFunct, removeFunct) {
+    async function createTasksLayout(newFunct, removeFunct) {
         createCommonLayout(newFunct, removeFunct)
         addBtn.textContent = "New Task";
         removeBtn.textContent = "Remove Task";
         listingDiv.className = "tasks-lst";
+        let type1;
+        let promise = new Promise((resolve) => { _promote = resolve });
+        await promise.then((result) => { type1 = result });
+        return returnVal
     }
     return { createProjectsLayout, createTasksLayout }
 })()
@@ -167,9 +178,6 @@ export const PopUp = (function () {
         }
         form.appendChild(priorities);
         form.appendChild(btns);
-        // createCommon().then(function (result) {
-        //     form.appendChild(btns);
-        // })
         let type1;
         let promise = new Promise((resolve) => { _promote = resolve });
         await promise.then((result) => { type1 = result });
