@@ -12,7 +12,24 @@ export function createNav() {
     }
 }
 
-export function projectsLayout() {
+export const Layout = (function () {
+    const content = document.querySelector(".content")
+    const addBtn = document.createElement("button")
+    const removeBtn = document.createElement("button");
+    // Initializing mainDiv to dummy div to make creation code simpler
+    let mainDiv = document.createElement("div");
+
+    function createCommonLayout() {
+        mainDiv.remove()
+        mainDiv = document.createElement("div");
+        const btnsDiv = document.createElement("div");
+        const listingDiv = document.createElement("div");
+
+        mainDiv.appendChild(btnsDiv);
+        mainDiv.appendChild(listingDiv);
+
+        content.appendChild(mainDiv)
+    }
 
 }
 
