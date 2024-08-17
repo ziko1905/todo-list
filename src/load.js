@@ -107,6 +107,7 @@ export const PopUp = (function () {
             const input = document.createElement("input");
 
             priorityDiv.className = "priority";
+            priorityDiv.id = n;
             label.textContent = n.charAt(0).toLocaleUpperCase() + n.slice(1);
             label.setAttribute("for", n);
             input.id = n;
