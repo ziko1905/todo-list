@@ -149,10 +149,10 @@ div#mild {
     padding: 10px;
 }
 
-.submit-btn {
+.pop .submit-btn {
     background-color: #22c55e;
 }
 
-.cancel-btn {
+.pop .cancel-btn {
     background-color: #9ebba860;
 }

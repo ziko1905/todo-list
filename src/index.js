@@ -1,5 +1,5 @@
 import "./styles.css"
-import { createNav, PopUp } from "./load";
+import { createNav, PopUp, Layout } from "./load";
 
 class Task {
     constructor(title, description, date, priority, notes, check) {
@@ -21,7 +21,6 @@ class Project {
 }
 
 createNav()
-const elem = await PopUp.createCommon("task");
-console.log(elem)
-
-PopUp.createCommon()
+// const elem = await PopUp.createCommon("task");
+Layout.createProjectsLayout()
+// PopUp.createCommon()

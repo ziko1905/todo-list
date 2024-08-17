@@ -19,19 +19,30 @@ export const Layout = (function () {
     // Initializing mainDiv to dummy div to make creation code simpler
     let mainDiv = document.createElement("div");
 
+    addBtn.className = "new-btn";
+    removeBtn.className = "remove-btn";
+
     function createCommonLayout() {
         mainDiv.remove()
         mainDiv = document.createElement("div");
         const btnsDiv = document.createElement("div");
         const listingDiv = document.createElement("div");
 
+        btnsDiv.appendChild(addBtn);
+        btnsDiv.appendChild(removeBtn);
         mainDiv.appendChild(btnsDiv);
         mainDiv.appendChild(listingDiv);
 
         content.appendChild(mainDiv)
     }
 
-}
+    function createProjectsLayout() {
+        createCommonLayout()
+        addBtn.textContent = "New Project";
+        removeBtn.textContent = "Remove Project";
+    }
+    return { createProjectsLayout }
+})()
 
 export const PopUp = (function () {
     let form;
