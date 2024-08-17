@@ -17,11 +17,12 @@ export function projectsLayout() {
 }
 
 export const PopUp = (function () {
-    const form = document.createElement("form");
+    let form;
     let _promote;
     async function createCommon(type) {
         let returnVal;
 
+        form = document.createElement("form");
         const popDiv = document.createElement("div");
         const legend = document.createElement("legend");
         const titleLabel = document.createElement("label");

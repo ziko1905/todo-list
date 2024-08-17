@@ -21,5 +21,7 @@ class Project {
 }
 
 createNav()
-// const elem = await PopUp.createCommon("task");
+const elem = await PopUp.createCommon("task");
 console.log(elem)
+
+PopUp.createCommon()
