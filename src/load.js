@@ -12,6 +12,10 @@ export function createNav() {
     }
 }
 
+export function projectsLayout() {
+
+}
+
 export const PopUp = (function () {
     const form = document.createElement("form");
     let _promote;

@@ -12,6 +12,8 @@
 body {
     font-family: "New Amsterdam";
     background-color: var(--white);
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
 
 nav {
