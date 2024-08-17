@@ -60,6 +60,7 @@ export const PopUp = (function () {
         const cancelBtn = document.createElement("button");
         const btnsDiv = document.createElement("div");
 
+        btnsDiv.className = "btn-div";
         submitBtn.textContent = "Add";
         submitBtn.className = "submit-btn";
         cancelBtn.textContent = "Cancel";
