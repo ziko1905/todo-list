@@ -16,6 +16,7 @@ export const Layout = (function () {
     const content = document.querySelector(".content")
     const addBtn = document.createElement("button")
     const removeBtn = document.createElement("button");
+    const listingDiv = document.createElement("div");
     // Initializing mainDiv to dummy div to make creation code simpler
     let mainDiv = document.createElement("div");
 
@@ -26,7 +27,8 @@ export const Layout = (function () {
         mainDiv.remove()
         mainDiv = document.createElement("div");
         const btnsDiv = document.createElement("div");
-        const listingDiv = document.createElement("div");
+
+        btnsDiv.className = "btns-div";
 
         btnsDiv.appendChild(addBtn);
         btnsDiv.appendChild(removeBtn);
@@ -40,6 +42,7 @@ export const Layout = (function () {
         createCommonLayout()
         addBtn.textContent = "New Project";
         removeBtn.textContent = "Remove Project";
+        listingDiv.className = "projects-lst";
     }
     return { createProjectsLayout }
 })()

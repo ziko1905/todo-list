@@ -56,6 +56,33 @@ nav {
     bottom: 40px;
 }
 
+.content {
+    margin: 70px 150px;
+}
+
+.content .btns-div {
+    display: grid;
+    gap: 60px;
+    grid-template-columns: 300px 300px;
+    grid-auto-flow: column;
+
+    font-size: 1.7rem;
+}
+
+.btns-div button {
+    border-radius: 10px;
+    border: none;
+    padding: 7px 0;
+}
+
+.new-btn {
+    background-color: var(--secondary-clr);
+}
+
+.remove-btn {
+    background-color: rgb(255, 73, 73);
+}
+
 .pop {
     font-size: 2.2rem;
     width: 600px;
