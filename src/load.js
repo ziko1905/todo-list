@@ -44,7 +44,14 @@ export const Layout = (function () {
         removeBtn.textContent = "Remove Project";
         listingDiv.className = "projects-lst";
     }
-    return { createProjectsLayout }
+
+    function createTasksLayout() {
+        createCommonLayout()
+        addBtn.textContent = "New Task";
+        removeBtn.textContent = "Remove Task";
+        listingDiv.className = "tasks-lst";
+    }
+    return { createProjectsLayout, createTasksLayout }
 })()
 
 export const PopUp = (function () {
