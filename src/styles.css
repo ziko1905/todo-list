@@ -40,6 +40,7 @@ nav {
 }
 
 .act {
+    background-color: var(--primary-clr);
     border-bottom: 2px solid var(--secondary-clr);
 }
 
