@@ -16,8 +16,8 @@ export const Layout = (function () {
     let returnVal;
     let _promote;
     const content = document.querySelector(".content")
-    const addBtn = document.createElement("button")
-    const removeBtn = document.createElement("button");
+    let addBtn = document.createElement("button")
+    let removeBtn = document.createElement("button");
     const listingDiv = document.createElement("div");
     // Initializing mainDiv to dummy div to make creation code simpler
     let mainDiv = document.createElement("div");
@@ -28,12 +28,13 @@ export const Layout = (function () {
     async function createCommonLayout(newFunct, removeFunct) {
         mainDiv.remove()
         mainDiv = document.createElement("div");
+        addBtn = addBtn.cloneNode(true);
+        removeBtn = removeBtn.cloneNode(true);
         const btnsDiv = document.createElement("div");
 
         btnsDiv.className = "btns-div";
         addBtn.addEventListener("click", async (e) => {
             returnVal = await newFunct()
-            e.target.removeEventListener("click", null)
             _promote()
         })
 

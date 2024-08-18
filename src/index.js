@@ -2,13 +2,14 @@ import "./styles.css"
 import { createNav, PopUp, Layout } from "./load";
 
 class Task {
-    constructor(title, description, date, priority, notes, check) {
+    constructor(title, description, date, priority, notes, check, project) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.priority = priority;
         this.notes = notes;
         this.check = check;
+        this.project = project;
     }
 }
 
@@ -21,5 +22,5 @@ class Project {
 }
 
 createNav()
-console.log(await Layout.createProjectsLayout(await PopUp.createProject))
-// console.log(await PopUp.createTask())
+console.log(await Layout.createTasksLayout(PopUp.createTask))
+await Layout.createProjectsLayout(PopUp.createProject)
