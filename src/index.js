@@ -15,10 +15,12 @@ class Task {
 }
 
 class Project {
-    constructor(title, description) {
+    constructor(title, description, hide) {
         this.title = title; 
         this.description = description;
+        this.hide = hide;
         this.tasks = [];
+
     }
 }
 
@@ -61,18 +63,24 @@ class MakeNew {
 }
 
 const Buttons = (function () {
+    // Cant use buttons outside function scope bcs IIFE gets called before buttons are created
     function assignProject() {
-        let newBtn = document.querySelector(".new-btn")
-        let removeBtn = document.querySelector(".remove-btn")
+        const newBtn = document.querySelector(".new-btn");
+        const removeBtn = document.querySelector(".remove-btn");
+        const plusBtn = document.querySelector("#add");
 
-        newBtn.addEventListener("click", MakeNew.project)
+        newBtn.addEventListener("click", MakeNew.project);
+        plusBtn.addEventListener("click", MakeNew.project);
     }
 
     function assignTask() {
-        let newBtn = document.querySelector(".new-btn")
-        let removeBtn = document.querySelector(".remove-btn")
+        const newBtn = document.querySelector(".new-btn");
+        const removeBtn = document.querySelector(".remove-btn");
+        const plusBtn = document.querySelector("#add");
 
-        newBtn.addEventListener("click", MakeNew.task)
+        newBtn.addEventListener("click", MakeNew.task);
+        plusBtn.addEventListener("click", MakeNew.task);
+
     }
 
     return { assignProject, assignTask }
@@ -80,6 +88,8 @@ const Buttons = (function () {
 
 createNav()
 assignNavCards()
+document.querySelector(".card.projects").click()
+const defaultProject = Project("Main", "This is main project for all generic tasks.", false)
 // createProject()
 
 
