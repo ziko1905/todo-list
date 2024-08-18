@@ -151,26 +151,38 @@ nav {
     justify-items: center;
 }
 
-.priorities input {
+.priority input {
     display: none;
 }
 
 .priorities div {
+    display: contents;
     text-align: center;
     width: 100%;
-    padding: 5px 30px;
-    border-radius: 30px;
 }
 
-div#urgent {
+.priority label {
+    box-sizing: content-box;
+    align-self: end;
+    width: 100%;
+    padding: 5px;
+    border-radius: 20px;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.116);
+}
+
+.priority input:checked + label {
+    border: none;
+}
+
+label[for="urgent"] {
     background-color: rgba(255, 0, 0, 0.651);
 }
 
-div#important {
+label[for="important"] {
     background-color: rgba(255, 157, 29, 0.637);
 }
 
-div#mild {
+label[for="mild"] {
     background-color: rgba(0, 153, 255, 0.623);
 }
 
