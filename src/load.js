@@ -6,7 +6,9 @@ export function createNav() {
     let cards = [];
     for (let n of ["Projects", "Today", "ByImportance", "ByDate"]) {
         const card = document.createElement("div")
-        card.className = "card";
+        card.classList.add("card")
+        if (n == "Projects") card.classList.add("projects")
+        else card.classList.add("tasks")
         card.textContent = n;
         cards.push(card);
         nav.appendChild(card);

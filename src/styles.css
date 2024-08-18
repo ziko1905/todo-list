@@ -31,13 +31,16 @@ nav {
 .card {
     font-size: 1.2rem;
     color: var(--quaternary-clr);
-    border-bottom: 2px solid var(--secondary-clr);
     padding-left: 30px;
     padding-top: 25px;
 }
 
 .card:hover {
     background-color: #dcfce7;
+}
+
+.act {
+    border-bottom: 2px solid var(--secondary-clr);
 }
 
 #add {
@@ -177,7 +180,7 @@ div#mild {
 }
 
 .pop .submit-btn {
-    background-color: #22c55e;
+    background-color: var(--secondary-clr);
 }
 
 .pop .cancel-btn {

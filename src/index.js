@@ -22,6 +22,24 @@ class Project {
     }
 }
 
+function assignNavCards() {
+    const cards = document.querySelectorAll("nav .card");
+    for (let n of cards) {
+        n.addEventListener("click", async (e) => {
+            for (let m of cards) m.classList.remove("act")
+            e.target.classList.add("act")
+            if (e.target.classList.contains("projects")) {
+                await Layout.createProjectsLayout(PopUp.createProject)
+            }
+            else {
+                await Layout.createTasksLayout(PopUp.createTask)
+            }
+            
+        })
+    }
+}
+
 createNav()
-console.log(await Layout.createTasksLayout(PopUp.createTask))
-await Layout.createProjectsLayout(PopUp.createProject)
+assignNavCards()
+
+
