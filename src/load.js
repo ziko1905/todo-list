@@ -28,7 +28,7 @@ export const Layout = (function () {
     addBtn.className = "new-btn";
     removeBtn.className = "remove-btn";
 
-    async function createCommonLayout(newFunct, removeFunct) {
+    function createCommonLayout() {
         mainDiv.remove()
         mainDiv = document.createElement("div");
         addBtn = addBtn.cloneNode(true);
@@ -36,11 +36,6 @@ export const Layout = (function () {
         const btnsDiv = document.createElement("div");
 
         btnsDiv.className = "btns-div";
-        addBtn.addEventListener("click", async (e) => {
-            returnVal = await newFunct()
-            _promote()
-        })
-
         btnsDiv.appendChild(addBtn);
         btnsDiv.appendChild(removeBtn);
         mainDiv.appendChild(btnsDiv);
@@ -49,26 +44,18 @@ export const Layout = (function () {
         content.appendChild(mainDiv)
     }
 
-    async function createProjectsLayout(newFunct, removeFunct) {
-        await createCommonLayout(newFunct, removeFunct)
+    function createProjectsLayout() {
+        createCommonLayout()
         addBtn.textContent = "New Project";
         removeBtn.textContent = "Remove Project";
         listingDiv.className = "projects-lst";
-        let type1;
-        let promise = new Promise((resolve) => { _promote = resolve });
-        await promise.then((result) => { type1 = result });
-        return returnVal
     }
 
-    async function createTasksLayout(newFunct, removeFunct) {
+    function createTasksLayout(newFunct, removeFunct) {
         createCommonLayout(newFunct, removeFunct)
         addBtn.textContent = "New Task";
         removeBtn.textContent = "Remove Task";
         listingDiv.className = "tasks-lst";
-        let type1;
-        let promise = new Promise((resolve) => { _promote = resolve });
-        await promise.then((result) => { type1 = result });
-        return returnVal
     }
     return { createProjectsLayout, createTasksLayout }
 })()
