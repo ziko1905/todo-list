@@ -39,7 +39,15 @@ function assignNavCards() {
     }
 }
 
+function createProject() {
+    const stop = document.createElement("div");
+    stop.className = "stop-all";
+    document.body.insertBefore(stop, document.body.firstChild);
+    
+}
+
 createNav()
 assignNavCards()
+createProject()
 
 
