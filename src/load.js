@@ -99,6 +99,16 @@ export class TaskCard extends Card {
     constructor(task, listingFunct) {
         super(task, listingFunct)
         this.div.className = "task-card"
+        this.createTaskSpecific();
+    }
+    createTaskSpecific() {
+        const dueDate = document.createElement("p");
+        dueDate.className = "due-date";
+        dueDate.textContent = "Due date: ";
+        this.div.classList.add(this.obj.priority)
+        if (this.obj.date == "E") dueDate.textContent += "Today";
+
+        this.div.appendChild(dueDate);
     }
 
 }
