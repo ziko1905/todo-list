@@ -110,9 +110,11 @@ export const PopUp = (function () {
 
         submitBtn.addEventListener("click", (e) => {
             e.preventDefault()
-            popDiv.remove()
-            returnVal = new FormData(form);
-            _promote();
+            if (form.reportValidity()) {
+                popDiv.remove()
+                returnVal = new FormData(form);
+                _promote();
+            }
         })
 
         cancelBtn.addEventListener("click", (e) => {
