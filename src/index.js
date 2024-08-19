@@ -27,6 +27,8 @@ class Project {
     }
 }
 
+const defaultProject = new Project("Main", "This is main project for all generic tasks.", false);
+
 function assignNavCards() {
     const cards = document.querySelectorAll("nav .card");
     for (let n of cards) {
@@ -66,6 +68,11 @@ class MakeNew {
         document.body.insertBefore(stop, document.body.firstChild);
 
         let formData = await PopUp.createTask()
+        if (formData) {
+            // defaultProject here until project selection is created
+            let task = new Task(formData.get("title"), formData.get("description"), formData.get("date") ? formData.get("date") : "E" , formData.get("priority"), null, null, defaultProject)
+            taskList.push(task);
+        }
         stop.remove()  
     }
 }
@@ -97,7 +104,7 @@ const Buttons = (function () {
 createNav()
 assignNavCards()
 document.querySelector(".card.projects").click()
-const defaultProject = new Project("Main", "This is main project for all generic tasks.", false)
+
 // createProject()
 
 
