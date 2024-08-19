@@ -34,6 +34,7 @@ export const Layout = (function () {
         removeBtn = removeBtn.cloneNode(true);
         const btnsDiv = document.createElement("div");
 
+        listingDiv.textContent = "";
         btnsDiv.className = "btns-div";
         btnsDiv.appendChild(addBtn);
         btnsDiv.appendChild(removeBtn);
@@ -64,8 +65,22 @@ export const Layout = (function () {
 })()
 
 class Card {
-    constructor() {
+    constructor(obj, listingFunct) {
         this.div = document.createElement("div");
+        this.obj = obj;
+        this.listingFunct = listingFunct;
+        this.createCard()
+    }
+
+    createCard() {
+        const title = document.createElement("h2");
+        const desc = document.createElement("p");
+
+        title.textContent = this.obj.title;
+        desc.textContent = this.obj.description;
+
+        this.div.appendChild(title);
+        this.div.appendChild(desc);
     }
 
     getElement() {
@@ -75,23 +90,17 @@ class Card {
 
 export class ProjectCard extends Card {
     constructor(project, listingFunct) {
-        super()
-        this.project = project;
-        this.listingFunct = listingFunct;
-        this.createCard()
-    }
-
-    createCard() {
-        const title = document.createElement("h2");
-        const desc = document.createElement("p");
-
-        title.textContent = this.project.title;
-        desc.textContent = this.project.description;
-
+        super(project, listingFunct)
         this.div.className = "project-card";
-        this.div.appendChild(title);
-        this.div.appendChild(desc);
     }
+}
+
+export class TaskCard extends Card {
+    constructor(task, listingFunct) {
+        super(task, listingFunct)
+        this.div.className = "task-card"
+    }
+
 }
 
 export const PopUp = (function () {
@@ -246,6 +255,19 @@ export class Listing {
         main.appendChild(list);
         document.querySelector(".projects-lst").appendChild(main)
         list.className = "project-list"
+        return list
+    }
+    task() {
+        document.querySelector(".tasks-lst").textContent = "";
+        const main = document.createElement("div");
+        const titleEle = document.createElement("h1");
+        const list = document.createElement("div");
+
+        titleEle.textContent = this.title;
+        main.appendChild(titleEle);
+        main.appendChild(list);
+        document.querySelector(".tasks-lst").appendChild(main)
+        list.className = "task-list"
         return list
     }
 }

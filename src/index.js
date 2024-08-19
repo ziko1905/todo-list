@@ -1,6 +1,6 @@
 import "./styles.css"
 import PubSub from "pubsub-js";
-import { createNav, PopUp, Layout, Listing, ProjectCard } from "./load";
+import { createNav, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load";
 
 window.taskList = [];
 window.projectList = [];
@@ -37,11 +37,13 @@ function assignNavCards() {
             e.target.classList.add("act")
             if (e.target.classList.contains("projects")) {
                 Layout.createProjectsLayout();
-                Buttons.assignProject()
+                Buttons.assignProject();
+                ListingController.project();
             }
             else {
-                Layout.createTasksLayout()
-                Buttons.assignTask()
+                Layout.createTasksLayout();
+                Buttons.assignTask();
+                ListingController.byCreation();
             }
             
         })
@@ -73,7 +75,9 @@ class MakeNew {
         if (formData) {
             // defaultProject here until project selection is created
             let task = new Task(formData.get("title"), formData.get("description"), formData.get("date") ? formData.get("date") : "E" , formData.get("priority"), null, null, defaultProject)
+            task.card = new TaskCard(task);
             taskList.push(task);
+            ListingController.byCreation()
         }
         stop.remove()  
     }
@@ -106,16 +110,16 @@ const Buttons = (function () {
 class ListingController {
     static common(title) {
         const listing = new Listing(title)
-        return listing.project();
+        return listing;
     }
     static project() {
-        list = this.common("Projects")
+        const list = this.common("Projects").project()
         for (let n of projectList) {
             list.appendChild(n.card.getElement())
         }
     }
     static byCreation() {
-        list = this.common("Tasks");
+        const list = this.common("Tasks").task();
         for (let n of taskList) {
             list.appendChild(n.card.getElement())
         }
