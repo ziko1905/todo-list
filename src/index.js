@@ -104,10 +104,19 @@ const Buttons = (function () {
 })()
 
 class ListingController {
+    static common(title) {
+        const listing = new Listing(title)
+        return listing.project();
+    }
     static project() {
-        const listing = new Listing("Projects")
-        const list = listing.project();
+        list = this.common("Projects")
         for (let n of projectList) {
+            list.appendChild(n.card.getElement())
+        }
+    }
+    static byCreation() {
+        list = this.common("Tasks");
+        for (let n of taskList) {
             list.appendChild(n.card.getElement())
         }
     }
@@ -116,7 +125,4 @@ class ListingController {
 createNav()
 assignNavCards()
 document.querySelector(".card.projects").click()
-
-// createProject()
-
 

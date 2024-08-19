@@ -4,7 +4,7 @@ const content = document.querySelector(".content")
 export function createNav() {
     const nav = document.querySelector("nav");
     let cards = [];
-    for (let n of ["Projects", "Today", "By Importance", "By Date"]) {
+    for (let n of ["Projects", "Today", "By Importance", "By Date", "By Creation"]) {
         const card = document.createElement("div")
         card.classList.add("card")
         if (n == "Projects") card.classList.add("projects")
