@@ -173,6 +173,7 @@ export const PopUp = (function () {
         cancelBtn.addEventListener("click", (e) => {
             e.preventDefault()
             popDiv.remove()
+            returnVal = null;
             _promote();
         })
 

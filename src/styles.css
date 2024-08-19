@@ -69,7 +69,8 @@ nav {
 }
 
 .content {
-    margin: 70px 150px;
+    height: 100svh;
+    padding: 70px 150px;
     display: grid;
     gap: 20px;
     grid-auto-rows: auto 1fr;
@@ -240,4 +241,26 @@ label[for="mild"] {
 
 .project-card p {
     word-break: break-word;
+}
+
+.task-list {
+    display: grid;
+    gap: 10px;
+}
+
+.task-card {
+    padding: 10px;
+    
+}
+
+.task-card.urgent {
+    background-color: red;
+}
+
+.task-card.important {
+    background-color: orange;   
+}
+
+.task-card.mild {
+    background-color: aqua;
 }
