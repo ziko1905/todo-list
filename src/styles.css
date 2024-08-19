@@ -224,3 +224,20 @@ label[for="mild"] {
 .pop .cancel-btn {
     background-color: #9ebba860;
 }
+
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+}
+
+.project-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px -5px;
+}
+
+.project-card p {
+    word-break: break-word;
+}
