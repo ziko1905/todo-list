@@ -250,6 +250,16 @@ label[for="mild"] {
     word-break: break-word;
 }
 
+.project-card form {
+    display: grid;
+    grid-auto-rows: auto;
+    gap: 5px;
+}
+
+.project-card form input{
+justify-self: start;
+}
+
 .tasks-lst {
     height: 100%;
     overflow: auto;
@@ -278,17 +288,29 @@ label[for="mild"] {
     background-color: rgb(163, 206, 255);
 }
 
-.edit-btn {
-    position: absolute;
+.form-btns button, .edit-btn {   
     padding: 2px 6px;
-    top: 20px;
-    right: 20px;
     border: none;
     background-color: #86efac;
     border-radius: 5px;
 }
 
+.form-btns, .edit-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
 .task-card .edit-btn {
     font-size: 1.5rem;
     padding: 4px 12px;
+}
+
+.form-btns {
+    display: flex;
+    gap: 7px;
+}
+
+.form-btns .cancel-btn {
+    background-color: #9ebba860;
 }

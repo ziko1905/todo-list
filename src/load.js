@@ -69,22 +69,49 @@ class Card {
         this.div = document.createElement("div");
         this.obj = obj;
         this.listingFunct = listingFunct;
+        this.editBtn = document.createElement("button")
         this.createCard();
     }
 
     createCard() {
         const title = document.createElement("h2");
         const desc = document.createElement("p");
-        const editBtn = document.createElement("button");
         
         title.textContent = this.obj.title;
         desc.textContent = this.obj.description;
-        editBtn.textContent = "Edit";
-        editBtn.className = "edit-btn"
+        this.editBtn.textContent = "Edit";
+        this.editBtn.className = "edit-btn"
 
         this.div.appendChild(title);
         this.div.appendChild(desc);
-        this.div.appendChild(editBtn);
+        this.div.appendChild(this.editBtn);
+    }
+
+    edit() {
+        this.div.textContent = "";
+        const editForm = document.createElement("form");
+        const titleInput = document.createElement("input");
+        const descInput = document.createElement("textarea");
+        const buttonsDiv = document.createElement("div");
+        const submitBtn = document.createElement("button");
+        const cancelBtn = document.createElement("button");
+
+        titleInput.setAttribute("placeholder", this.obj.title);
+        titleInput.required = true;
+        descInput.className = "desc";
+        descInput.setAttribute("placeholder", this.obj.description);
+        buttonsDiv.className = "form-btns";
+        submitBtn.textContent = "Ok";
+        cancelBtn.textContent = "Cancel";
+        submitBtn.className = "submit-btn";
+        cancelBtn.className = "cancel-btn"
+        
+        buttonsDiv.appendChild(submitBtn);
+        buttonsDiv.appendChild(cancelBtn);
+        editForm.appendChild(titleInput);
+        editForm.appendChild(descInput);
+        editForm.appendChild(buttonsDiv);
+        this.div.appendChild(editForm);
     }
 
     getElement() {
@@ -96,6 +123,10 @@ export class ProjectCard extends Card {
     constructor(project, listingFunct) {
         super(project, listingFunct)
         this.div.className = "project-card";
+        this.editBtn.addEventListener("click", () => this.editProjectCard())
+    }
+    editProjectCard() {
+        super.edit()
     }
 }
 
@@ -105,6 +136,7 @@ export class TaskCard extends Card {
         this.div.className = "task-card"
         this.createTaskSpecific();
     }
+
     createTaskSpecific() {
         const dueDate = document.createElement("p");
         dueDate.className = "due-date";
