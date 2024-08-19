@@ -152,6 +152,10 @@ export class TaskCard extends Card {
         super(task, listingFunct)
         this.div.className = "task-card"
         this.createTaskSpecific();
+        this.editBtn.addEventListener("click", () => this.editTaskCard())
+    }
+    editTaskCard() {
+        super.edit()
     }
 
     createTaskSpecific() {
