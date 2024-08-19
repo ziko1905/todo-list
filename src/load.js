@@ -69,18 +69,22 @@ class Card {
         this.div = document.createElement("div");
         this.obj = obj;
         this.listingFunct = listingFunct;
-        this.createCard()
+        this.createCard();
     }
 
     createCard() {
         const title = document.createElement("h2");
         const desc = document.createElement("p");
-
+        const editBtn = document.createElement("button");
+        
         title.textContent = this.obj.title;
         desc.textContent = this.obj.description;
+        editBtn.textContent = "Edit";
+        editBtn.className = "edit-btn"
 
         this.div.appendChild(title);
         this.div.appendChild(desc);
+        this.div.appendChild(editBtn);
     }
 
     getElement() {
