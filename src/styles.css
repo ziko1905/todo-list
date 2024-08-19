@@ -70,7 +70,7 @@ nav {
 
 .content {
     height: 100svh;
-    padding: 70px 150px;
+    padding: 70px 150px 0 150px;
     display: grid;
     gap: 20px;
     grid-auto-rows: auto 1fr;
@@ -226,6 +226,11 @@ label[for="mild"] {
     background-color: #9ebba860;
 }
 
+.projects-lst {
+    height: 100%;
+    overflow: auto;
+}
+
 .project-list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -241,6 +246,11 @@ label[for="mild"] {
 
 .project-card p {
     word-break: break-word;
+}
+
+.tasks-lst {
+    height: 100%;
+    overflow: auto;
 }
 
 .task-list {
