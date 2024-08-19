@@ -60,6 +60,34 @@ export const Layout = (function () {
     return { createProjectsLayout, createTasksLayout }
 })()
 
+class Card {
+    constructor() {
+        this.div = document.createElement("div");
+    }
+
+    getElement() {
+        return this.div
+    }
+}
+
+class ProjectCard extends Card {
+    constructor(project, listingFunct) {
+        this.project = project;
+        this.listingFunct = listingFunct;
+    }
+
+    createCard() {
+        const title = document.createElement("h2");
+        const desc = document.createElement("p");
+
+        title.textContent = this.project.textContent;
+        desc.textContent = this.project.description;
+
+        this.div.appendChild(title);
+        this.div.appendChild(desc);
+    }
+}
+
 export const PopUp = (function () {
     let form;
     let legend;
