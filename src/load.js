@@ -48,13 +48,17 @@ export const Layout = (function () {
         addBtn.textContent = "New Project";
         removeBtn.textContent = "Remove Project";
         listingDiv.className = "projects-lst";
+
+        return listingDiv
     }
 
-    function createTasksLayout(newFunct, removeFunct) {
-        createCommonLayout(newFunct, removeFunct)
+    function createTasksLayout() {
+        createCommonLayout()
         addBtn.textContent = "New Task";
         removeBtn.textContent = "Remove Task";
         listingDiv.className = "tasks-lst";
+
+        return listingDiv
     }
     return { createProjectsLayout, createTasksLayout }
 })()
@@ -69,19 +73,22 @@ class Card {
     }
 }
 
-class ProjectCard extends Card {
+export class ProjectCard extends Card {
     constructor(project, listingFunct) {
+        super()
         this.project = project;
         this.listingFunct = listingFunct;
+        this.createCard()
     }
 
     createCard() {
         const title = document.createElement("h2");
         const desc = document.createElement("p");
 
-        title.textContent = this.project.textContent;
+        title.textContent = this.project.title;
         desc.textContent = this.project.description;
 
+        this.div.className = "project-card";
         this.div.appendChild(title);
         this.div.appendChild(desc);
     }
@@ -223,3 +230,21 @@ export const PopUp = (function () {
     }
     return { createTask, createProject }
 })()
+
+export class Listing {
+    constructor(title) {
+        this.title = title;
+    }
+    project() {
+        document.querySelector(".projects-lst").textContent = "";
+        const main = document.createElement("div");
+        const titleEle = document.createElement("h1");
+        const list = document.createElement("div");
+
+        titleEle.textContent = this.title;
+        main.appendChild(titleEle);
+        main.appendChild(list);
+        document.querySelector(".projects-lst").appendChild(main)
+        return main
+    }
+}

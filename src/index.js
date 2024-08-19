@@ -1,6 +1,6 @@
 import "./styles.css"
 import PubSub from "pubsub-js";
-import { createNav, PopUp, Layout } from "./load";
+import { createNav, PopUp, Layout, Listing, ProjectCard } from "./load";
 
 window.taskList = [];
 window.projectList = [];
@@ -36,7 +36,7 @@ function assignNavCards() {
             for (let m of cards) m.classList.remove("act")
             e.target.classList.add("act")
             if (e.target.classList.contains("projects")) {
-                Layout.createProjectsLayout()
+                Layout.createProjectsLayout();
                 Buttons.assignProject()
             }
             else {
@@ -57,7 +57,9 @@ class MakeNew {
 
         if (formData) {
             let project = new Project(formData.get("title"), formData.get("description"), false)
+            project.card = new ProjectCard(project);
             projectList.push(project);
+            ListingController.project()
         }
         stop.remove()  
     }
@@ -100,6 +102,16 @@ const Buttons = (function () {
 
     return { assignProject, assignTask }
 })()
+
+class ListingController {
+    static project() {
+        const listing = new Listing("Projects")
+        const list = listing.project();
+        for (let n of projectList) {
+            list.appendChild(n.card.getElement())
+        }
+    }
+}
 
 createNav()
 assignNavCards()
