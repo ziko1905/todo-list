@@ -70,6 +70,9 @@ nav {
 
 .content {
     margin: 70px 150px;
+    display: grid;
+    gap: 20px;
+    grid-auto-rows: auto 1fr;
 }
 
 .content .btns-div {

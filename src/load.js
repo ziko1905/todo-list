@@ -29,8 +29,7 @@ export const Layout = (function () {
     removeBtn.className = "remove-btn";
 
     function createCommonLayout() {
-        mainDiv.remove()
-        mainDiv = document.createElement("div");
+        content.textContent = ""
         addBtn = addBtn.cloneNode(true);
         removeBtn = removeBtn.cloneNode(true);
         const btnsDiv = document.createElement("div");
@@ -38,8 +37,8 @@ export const Layout = (function () {
         btnsDiv.className = "btns-div";
         btnsDiv.appendChild(addBtn);
         btnsDiv.appendChild(removeBtn);
-        mainDiv.appendChild(btnsDiv);
-        mainDiv.appendChild(listingDiv);
+        content.appendChild(btnsDiv);
+        content.appendChild(listingDiv);
 
         content.appendChild(mainDiv)
     }
