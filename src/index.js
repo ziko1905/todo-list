@@ -2,6 +2,9 @@ import "./styles.css"
 import PubSub from "pubsub-js";
 import { createNav, PopUp, Layout } from "./load";
 
+window.taskList = [];
+window.projectList = [];
+
 class Task {
     constructor(title, description, date, priority, notes, check, project) {
         this.title = title;
@@ -49,6 +52,11 @@ class MakeNew {
         document.body.insertBefore(stop, document.body.firstChild);
 
         let formData = await PopUp.createProject()
+
+        if (formData) {
+            let project = new Project(formData.get("title"), formData.get("description"), false)
+            projectList.push(project);
+        }
         stop.remove()  
     }
 
@@ -89,7 +97,7 @@ const Buttons = (function () {
 createNav()
 assignNavCards()
 document.querySelector(".card.projects").click()
-const defaultProject = Project("Main", "This is main project for all generic tasks.", false)
+const defaultProject = new Project("Main", "This is main project for all generic tasks.", false)
 // createProject()
 
 
