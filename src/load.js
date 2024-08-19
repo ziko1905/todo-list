@@ -97,14 +97,31 @@ class Card {
         const cancelBtn = document.createElement("button");
 
         titleInput.setAttribute("placeholder", this.obj.title);
-        titleInput.required = true;
+        titleInput.name = "title"
         descInput.className = "desc";
         descInput.setAttribute("placeholder", this.obj.description);
+        descInput.name = "description";
         buttonsDiv.className = "form-btns";
         submitBtn.textContent = "Ok";
         cancelBtn.textContent = "Cancel";
         submitBtn.className = "submit-btn";
         cancelBtn.className = "cancel-btn"
+
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            if (editForm.reportValidity()) {
+                this.div.remove()
+                this.obj.edit(new FormData(editForm))
+            }
+            
+        })
+
+        cancelBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            this.div.remove()
+            this.obj.edit(null);
+        }
+        )
         
         buttonsDiv.appendChild(submitBtn);
         buttonsDiv.appendChild(cancelBtn);

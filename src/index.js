@@ -23,7 +23,15 @@ class Project {
         this.description = description;
         this.hide = hide;
         this.tasks = [];
-
+    }
+    edit(formData) {
+        if (formData) {
+            this.title = formData.get("title") ? formData.get("title") : this.title;
+            this.description = formData.get("description") ? formData.get("description") : this.description;
+        }
+        console.log(this.card)
+        this.card = new ProjectCard(this);
+        ListingController.project()
     }
 }
 
@@ -108,8 +116,12 @@ const Buttons = (function () {
 })()
 
 class ListingController {
+    constructor() {
+        this.oldTitle = null;
+    }
     static common(title) {
-        const listing = new Listing(title)
+        this.oldTitle = title ? title : this.oldTitle;
+        const listing = new Listing(this.oldTitle)
         return listing;
     }
     static project() {
