@@ -245,6 +245,7 @@ export class Listing {
         main.appendChild(titleEle);
         main.appendChild(list);
         document.querySelector(".projects-lst").appendChild(main)
-        return main
+        list.className = "project-list"
+        return list
     }
 }
