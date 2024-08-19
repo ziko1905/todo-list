@@ -82,6 +82,7 @@ export const PopUp = (function () {
         titleLabel.className = "title-lab";
         titleInput.id = "title";
         titleInput.setAttribute("name", "title");
+        titleInput.required = true;
         titleInput.className = "title-inp";
         descDiv.className = "desc-div";
         descLabel.textContent = "Description: ";
@@ -161,6 +162,9 @@ export const PopUp = (function () {
             input.value = n;
             input.name = "priority";
             input.type = "radio"
+            if (n == "important") {
+                input.checked = true;
+            }
 
             priorityDiv.appendChild(input);
             priorityDiv.appendChild(label);
