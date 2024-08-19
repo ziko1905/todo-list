@@ -235,6 +235,7 @@ label[for="mild"] {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
+    margin-left: 2px;
 }
 
 .project-card {
@@ -255,22 +256,22 @@ label[for="mild"] {
 
 .task-list {
     display: grid;
-    gap: 10px;
+    gap: 20px;
 }
 
 .task-card {
-    padding: 10px;
-    
+    padding: 10px 30px;
+    border-radius: 5px;
 }
 
 .task-card.urgent {
-    background-color: red;
+    background-color: rgb(255, 134, 134);
 }
 
 .task-card.important {
-    background-color: orange;   
+    background-color: rgb(255, 206, 115);   
 }
 
 .task-card.mild {
-    background-color: aqua;
+    background-color: rgb(163, 206, 255);
 }
