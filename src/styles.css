@@ -143,6 +143,19 @@ nav {
     display: block;
 }
 
+.pop .date-div::after {
+    display: block;
+    position: absolute;
+    content: "Default: Every Day";
+    color: rgba(0, 0, 0, 0.623);
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.pop #date {
+    width: 100%;
+}
+
 .priorities {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

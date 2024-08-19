@@ -138,17 +138,20 @@ export const PopUp = (function () {
         form.className = "task";
         legend.textContent += "Task";
 
+        const dateDiv = document.createElement("div");
         const dateLabel = document.createElement("label");
         const date = document.createElement("input");
 
+        dateDiv.className = "date-div";
         dateLabel.setAttribute("for", "date");
         dateLabel.textContent = "Date: "
         date.id = "date";
         date.name = "date";
         date.type = "datetime-local";
 
+        dateDiv.appendChild(date)
         form.appendChild(dateLabel);
-        form.appendChild(date);
+        form.appendChild(dateDiv);
 
         const priorities = document.createElement("div");
         priorities.className = "priorities";
