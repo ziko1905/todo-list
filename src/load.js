@@ -113,7 +113,7 @@ class Card {
             e.preventDefault()
             if (this.editForm.reportValidity()) {
                 this.div.remove()
-                this.obj.edit(new FormData(this.editForm))
+                this.obj.edit(new FormData(this.editForm), this.listingFunct)
             }
             
         })
@@ -121,7 +121,7 @@ class Card {
         cancelBtn.addEventListener("click", (e) => {
             e.preventDefault()
             this.div.remove()
-            this.obj.edit(null);
+            this.obj.edit(null, this.listingFunct);
         }
         )
         

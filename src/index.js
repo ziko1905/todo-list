@@ -5,11 +5,33 @@ import { createNav, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load
 export let taskList = [];
 export let projectList = [];
 
+const ListingController = (function () {
+    let oldTitle = null;
+    function common(title) {
+        oldTitle = title ? title : oldTitle;
+        const listing = new Listing(oldTitle)
+        return listing;
+    };
+    function project() {
+        const list = common("Projects").project()
+        for (let n of projectList) {
+            list.appendChild(n.card.getElement())
+        }
+    };
+    function byCreation() {
+        const list = common("Tasks").task();
+        for (let n of taskList) {
+            list.appendChild(n.card.getElement())
+        }
+    };
+    return { project, byCreation }
+})()
+
 class Task {
     constructor() {
         this.checked = false;
     }
-    edit(formData) {
+    edit(formData, funct) {
         if (formData) {
             this.title = formData.get("title") ? formData.get("title") : this.title;
             this.description = formData.get("description") ? formData.get("description") : this.description;
@@ -18,8 +40,12 @@ class Task {
             this.project = formData.get("project") ? projectList[formData.get("project")] : defaultProject; 
             console.log(this.project);
         }
-        this.card = new TaskCard(this);
-        ListingController.byCreation()
+        this.card = new TaskCard(this, funct);
+        funct()
+    }
+    triggerChecked() {
+        this.checked = !this.checked;
+        this.card.listingFunct()
     }
 }
 
@@ -30,13 +56,13 @@ class Project {
         this.hide = hide;
         this.tasks = [];
     }
-    edit(formData) {
+    edit(formData, funct) {
         if (formData) {
             this.title = formData.get("title") ? formData.get("title") : this.title;
             this.description = formData.get("description") ? formData.get("description") : this.description;
         }
-        this.card = new ProjectCard(this);
-        ListingController.project()
+        this.card = new ProjectCard(this, funct);
+        funct()
     }
 }
 
@@ -50,20 +76,21 @@ function assignNavCards() {
             e.target.classList.add("act")
             if (e.target.classList.contains("projects")) {
                 Layout.createProjectsLayout();
-                Buttons.assignProject();
+                Buttons.assignProject(ListingController.project);
                 ListingController.project();
             }
             else {
                 Layout.createTasksLayout();
-                Buttons.assignTask();
+                Buttons.assignTask(ListingController.byCreation);
                 ListingController.byCreation();
             }
             
         })
     }
 }
+
 class MakeNew {
-    static async project() {
+    static async project(listingFunct) {
         const stop = document.createElement("div");
         stop.className = "stop-all";
         document.body.insertBefore(stop, document.body.firstChild);
@@ -71,15 +98,15 @@ class MakeNew {
         let formData = await PopUp.createProject()
 
         if (formData) {
-            let project = new Project(formData.get("title"), formData.get("description"), false)
-            project.card = new ProjectCard(project);
+            let project = new Project()
+            project.edit(formData, listingFunct);
             projectList.push(project);
             ListingController.project()
         }
         stop.remove()  
     }
 
-    static async task() {
+    static async task(listingFunct) {
         const stop = document.createElement("div");
         stop.className = "stop-all";
         document.body.insertBefore(stop, document.body.firstChild);
@@ -87,7 +114,7 @@ class MakeNew {
         let formData = await PopUp.createTask()
         if (formData) {
             let task = new Task();
-            task.edit(formData);
+            task.edit(formData, listingFunct);
             taskList.push(task);
             ListingController.byCreation()
         }
@@ -97,50 +124,28 @@ class MakeNew {
 
 const Buttons = (function () {
     // Cant use buttons outside function scope bcs IIFE gets called before buttons are created
-    function assignProject() {
+    function assignProject(listingFunct) {
         const newBtn = document.querySelector(".new-btn");
         const removeBtn = document.querySelector(".remove-btn");
         const plusBtn = document.querySelector("#add");
 
-        newBtn.addEventListener("click", MakeNew.project);
-        plusBtn.addEventListener("click", MakeNew.project);
+        newBtn.addEventListener("click", () => MakeNew.project(listingFunct));
+        plusBtn.addEventListener("click",() => MakeNew.project(listingFunct));
     }
 
-    function assignTask() {
+    function assignTask(listingFunct) {
         const newBtn = document.querySelector(".new-btn");
         const removeBtn = document.querySelector(".remove-btn");
         const plusBtn = document.querySelector("#add");
 
-        newBtn.addEventListener("click", MakeNew.task);
-        plusBtn.addEventListener("click", MakeNew.task);
+        newBtn.addEventListener("click", () => MakeNew.task(listingFunct));
+        plusBtn.addEventListener("click", () => MakeNew.task(listingFunct));
 
     }
 
     return { assignProject, assignTask }
 })()
 
-class ListingController {
-    constructor() {
-        this.oldTitle = null;
-    }
-    static common(title) {
-        this.oldTitle = title ? title : this.oldTitle;
-        const listing = new Listing(this.oldTitle)
-        return listing;
-    }
-    static project() {
-        const list = this.common("Projects").project()
-        for (let n of projectList) {
-            list.appendChild(n.card.getElement())
-        }
-    }
-    static byCreation() {
-        const list = this.common("Tasks").task();
-        for (let n of taskList) {
-            list.appendChild(n.card.getElement())
-        }
-    }
-}
 
 createNav()
 assignNavCards()
