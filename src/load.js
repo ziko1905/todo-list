@@ -233,6 +233,7 @@ export class TaskCard extends Card {
         header.appendChild(dueDate);
         header.appendChild(this.title);
         this.div.insertBefore(header, this.div.firstChild);
+        this.div.setAttribute("data-projectName", this.obj.project.title ? `#${this.obj.project.title}` : "");
     }
 
 }
@@ -364,7 +365,7 @@ export const PopUp = (function () {
             input.id = n;
             input.type = "radio";
             input.name = "project";
-            input.value = projectList[n];
+            input.value = n;
             label.appendChild(projectList[n].card.getSmallerCard())
             projectsDiv.appendChild(input);
             projectsDiv.appendChild(label);

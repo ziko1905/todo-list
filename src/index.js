@@ -21,7 +21,8 @@ class Task {
             this.description = formData.get("description") ? formData.get("description") : this.description;
             this.date = formData.get("every-day") ? "E" : formData.get("date") ? formData.get("date") : "E";
             this.priority = formData.get("priority");
-            this.project = formData.get("project") ? formData.get("project") : defaultProject; 
+            this.project = formData.get("project") ? projectList[formData.get("project")] : defaultProject; 
+            console.log(this.project);
         }
         this.card = new TaskCard(this);
         ListingController.byCreation()
