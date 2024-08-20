@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import PubSub from "pubsub-js";
+import { projectList } from ".";
 const content = document.querySelector(".content")
 
 export function createNav() {
@@ -142,9 +143,19 @@ export class ProjectCard extends Card {
         super(project, listingFunct)
         this.div.className = "project-card";
         this.editBtn.addEventListener("click", () => this.editProjectCard())
+        this.createSmallerCard()
     }
     editProjectCard() {
         super.edit()
+    }
+    createSmallerCard() {
+        this.smallerCard = this.div.cloneNode(true);
+        const smallerEditBtn = this.smallerCard.querySelector("button");
+        smallerEditBtn.remove();
+    }
+
+    getSmallerCard() {
+        return this.smallerCard
     }
 }
 
@@ -305,10 +316,12 @@ export const PopUp = (function () {
         form.className = "task";
         legend.textContent += "Task";
 
+        const projectsDiv = document.createElement("div");
         const dateDiv = document.createElement("div");
         const dateLabel = document.createElement("label");
         const date = document.createElement("input");
 
+        projectsDiv.className = "projects-lst";
         dateDiv.className = "date-div";
         dateLabel.setAttribute("for", "date");
         dateLabel.textContent = "Date: "
@@ -342,8 +355,23 @@ export const PopUp = (function () {
             priorityDiv.appendChild(label);
             priorities.appendChild(priorityDiv);
         }
+
+        for (let n = 0; n < projectList.length; n++) {
+            const label = document.createElement("label");
+            const input = document.createElement("input");
+
+            label.setAttribute("for", n);
+            input.id = n;
+            input.type = "radio";
+            input.name = "project";
+            input.value = projectList[n];
+            label.appendChild(projectList[n].card.getSmallerCard())
+            projectsDiv.appendChild(input);
+            projectsDiv.appendChild(label);
+        }
         form.appendChild(priorities);
         form.appendChild(btns);
+        form.appendChild(projectsDiv);
         let type1;
         let promise = new Promise((resolve) => { _promote = resolve });
         await promise.then((result) => { type1 = result });

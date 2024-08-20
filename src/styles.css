@@ -168,7 +168,7 @@ nav {
     justify-items: center;
 }
 
-input.every-day, .priority input {
+input.every-day, .priority input, .pop .projects-lst input {
     display: none;
 }
 
@@ -224,6 +224,22 @@ label[for="mild"] {
 
 .pop .cancel-btn {
     background-color: #9ebba860;
+}
+
+.pop .projects-lst {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 1px;
+    position: absolute;
+    left: 102%;
+    width: 250px;
+    height: 92%;
+}
+
+.pop .projects-lst input:checked + label div {
+    border: 3px solid var(--secondary-clr);
 }
 
 .projects-lst {

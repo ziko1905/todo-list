@@ -2,8 +2,8 @@ import "./styles.css"
 import PubSub from "pubsub-js";
 import { createNav, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load";
 
-window.taskList = [];
-window.projectList = [];
+export let taskList = [];
+export let projectList = [];
 
 class Task {
     constructor(title, description, date, priority, notes, check, project) {
@@ -21,8 +21,8 @@ class Task {
             this.description = formData.get("description") ? formData.get("description") : this.description;
             this.date = formData.get("every-day") ? "E" : formData.get("date") ? formData.get("date") : "E";
             this.priority = formData.get("priority");
+            this.project = formData.get("project") ? formData.get("project") : defaultProject; 
         }
-        console.log(this.card)
         this.card = new TaskCard(this);
         ListingController.byCreation()
     }
@@ -40,7 +40,6 @@ class Project {
             this.title = formData.get("title") ? formData.get("title") : this.title;
             this.description = formData.get("description") ? formData.get("description") : this.description;
         }
-        console.log(this.card)
         this.card = new ProjectCard(this);
         ListingController.project()
     }
@@ -92,9 +91,8 @@ class MakeNew {
 
         let formData = await PopUp.createTask()
         if (formData) {
-            // defaultProject here until project selection is created
-            let task = new Task(formData.get("title"), formData.get("description"), formData.get("date") ? formData.get("date") : "E" , formData.get("priority"), null, null, defaultProject)
-            task.card = new TaskCard(task);
+            let task = new Task();
+            task.edit(formData);
             taskList.push(task);
             ListingController.byCreation()
         }
