@@ -15,6 +15,17 @@ class Task {
         this.check = check;
         this.project = project;
     }
+    edit(formData) {
+        if (formData) {
+            this.title = formData.get("title") ? formData.get("title") : this.title;
+            this.description = formData.get("description") ? formData.get("description") : this.description;
+            this.date = formData.get("date") ? formData.get("date") : "E";
+            this.priority = formData.get("priority");
+        }
+        console.log(this.card)
+        this.card = new TaskCard(this);
+        ListingController.byCreation()
+    }
 }
 
 class Project {
