@@ -19,7 +19,7 @@ class Task {
         if (formData) {
             this.title = formData.get("title") ? formData.get("title") : this.title;
             this.description = formData.get("description") ? formData.get("description") : this.description;
-            this.date = formData.get("date") ? formData.get("date") : "E";
+            this.date = formData.get("every-day") ? "E" : formData.get("date") ? formData.get("date") : "E";
             this.priority = formData.get("priority");
         }
         console.log(this.card)

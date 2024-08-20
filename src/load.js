@@ -159,10 +159,24 @@ export class TaskCard extends Card {
         super.edit();
         const editHeader = document.createElement("div");
         const dueDate = document.createElement("input");
+        const everyDayDiv = document.createElement("div");
+        const everyDayInput = document.createElement("input");
+        const everyDayLabel = document.createElement("label");
         const priorities = document.createElement("div");
 
         dueDate.name = "date";
         dueDate.type = "datetime-local";
+        dueDate.value = this.obj.date;
+        everyDayDiv.className = "every-day";
+        everyDayInput.className = "every-day";
+        everyDayInput.type = "checkbox";
+        everyDayInput.id = "every-day";
+        everyDayInput.name = "every-day";
+        everyDayInput.value = true;
+        everyDayLabel.className = "every-day";
+        everyDayLabel.textContent = "Every Day";
+        everyDayLabel.setAttribute("for", "every-day");
+
         priorities.className = "priorities";
         for (let n of ["urgent", "important", "mild"]) {
             const priorityDiv = document.createElement("div");
@@ -183,9 +197,12 @@ export class TaskCard extends Card {
             priorities.appendChild(priorityDiv);
         }
 
+        everyDayDiv.appendChild(everyDayInput);
+        everyDayDiv.appendChild(everyDayLabel);
         editHeader.className = "edit-header";
         editHeader.appendChild(this.titleInput);
         editHeader.appendChild(dueDate);
+        editHeader.appendChild(everyDayDiv);
         editHeader.appendChild(priorities);
         this.editForm.insertBefore(editHeader, this.editForm.firstChild);
 
