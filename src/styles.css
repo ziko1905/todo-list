@@ -323,7 +323,8 @@ justify-self: start;
 
 .task-card .header {
     display: inline-grid;
-    gap: 10px;
+    grid-template-columns: auto auto;
+    gap: 10px 20px;
     align-items: center;
     margin: 10px 0;
 }
@@ -342,6 +343,14 @@ justify-self: start;
     background-color: azure;
     padding: 0 10px;
     font-size: 1.8rem;
+}
+
+.task-card .header .check-btn {
+    height: 50px;
+    width: 50px;
+    border: 3px solid;
+    border-radius: 6px;
+    background: transparent;
 }
 
 /* Task card edit section */

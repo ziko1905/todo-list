@@ -220,8 +220,9 @@ export class TaskCard extends Card {
     }
 
     createTaskSpecific() {
-        const header = document.createElement('div');
+        const header = document.createElement("div");
         const dueDate = document.createElement("p");
+        const checkButton = document.createElement("button");
 
         header.className = "header";
         dueDate.className = "due-date";
@@ -229,11 +230,13 @@ export class TaskCard extends Card {
         this.div.classList.add(this.obj.priority)
         if (this.obj.date == "E") dueDate.textContent += "Today";
         else dueDate.textContent += format(new Date(this.obj.date), "hh:mm dd.mm.yy");
+        checkButton.className = "check-btn";
+        this.div.setAttribute("data-projectName", this.obj.project.title ? `#${this.obj.project.title}` : "");
 
         header.appendChild(dueDate);
+        header.appendChild(checkButton);
         header.appendChild(this.title);
         this.div.insertBefore(header, this.div.firstChild);
-        this.div.setAttribute("data-projectName", this.obj.project.title ? `#${this.obj.project.title}` : "");
     }
 
 }
