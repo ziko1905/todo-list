@@ -160,14 +160,19 @@ export class TaskCard extends Card {
     }
 
     createTaskSpecific() {
+        const header = document.createElement('div');
         const dueDate = document.createElement("p");
+
+        header.className = "header";
         dueDate.className = "due-date";
         dueDate.textContent = "Due date: ";
         this.div.classList.add(this.obj.priority)
         if (this.obj.date == "E") dueDate.textContent += "Today";
         else dueDate.textContent += format(new Date(this.obj.date), "hh:mm dd.mm.yy");
 
-        this.div.appendChild(dueDate);
+        header.appendChild(dueDate);
+        header.appendChild(this.title);
+        this.div.insertBefore(header, this.div.firstChild);
     }
 
 }
