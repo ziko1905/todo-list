@@ -163,19 +163,24 @@ export class TaskCard extends Card {
 
         dueDate.name = "date";
         dueDate.type = "datetime-local";
+        priorities.className = "priorities";
         for (let n of ["urgent", "important", "mild"]) {
+            const priorityDiv = document.createElement("div");
             const input = document.createElement("input");
             const label = document.createElement("label");
 
+            priorityDiv.className = "priority"
             input.name = "priority";
             input.id = n;
             input.value = n;
-            input.type = n;
+            input.type = "radio";
             label.textContent = n;
+            label.setAttribute("for", n)
             if (this.div.classList.contains(n)) input.checked = true
 
-            priorities.appendChild(label)
-            priorities.appendChild(input);
+            priorityDiv.appendChild(input);
+            priorityDiv.appendChild(label);
+            priorities.appendChild(priorityDiv);
         }
 
         editHeader.className = "edit-header";

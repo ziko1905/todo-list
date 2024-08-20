@@ -328,6 +328,25 @@ justify-self: start;
     font-size: 1.8rem;
 }
 
+/* Task card edit section */
+.task-card form {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    gap: 20px
+}
+
+.task-card form .edit-header {
+    justify-self: start;
+    display: inline-grid;
+    grid-auto-flow: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.task-card form .edit-header .priorities {
+    grid-column: auto;
+}
+
 .form-btns button, .edit-btn {   
     padding: 2px 6px;
     border: none;
