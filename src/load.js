@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import PubSub from "pubsub-js";
 const content = document.querySelector(".content")
 
@@ -164,6 +165,7 @@ export class TaskCard extends Card {
         dueDate.textContent = "Due date: ";
         this.div.classList.add(this.obj.priority)
         if (this.obj.date == "E") dueDate.textContent += "Today";
+        else dueDate.textContent += format(new Date(this.obj.date), "hh:mm dd.mm.yy");
 
         this.div.appendChild(dueDate);
     }
