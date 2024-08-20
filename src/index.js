@@ -6,14 +6,8 @@ export let taskList = [];
 export let projectList = [];
 
 class Task {
-    constructor(title, description, date, priority, notes, check, project) {
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.priority = priority;
-        this.notes = notes;
-        this.check = check;
-        this.project = project;
+    constructor() {
+        this.checked = false;
     }
     edit(formData) {
         if (formData) {
