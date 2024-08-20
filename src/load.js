@@ -90,15 +90,15 @@ class Card {
 
     edit() {
         this.div.textContent = "";
-        const editForm = document.createElement("form");
-        const titleInput = document.createElement("input");
+        this.editForm = document.createElement("form");
+        this.titleInput = document.createElement("input");
         const descInput = document.createElement("textarea");
         const buttonsDiv = document.createElement("div");
         const submitBtn = document.createElement("button");
         const cancelBtn = document.createElement("button");
 
-        titleInput.setAttribute("placeholder", this.obj.title);
-        titleInput.name = "title"
+        this.titleInput.setAttribute("placeholder", this.obj.title);
+        this.titleInput.name = "title"
         descInput.className = "desc";
         descInput.setAttribute("placeholder", this.obj.description);
         descInput.name = "description";
@@ -110,9 +110,9 @@ class Card {
 
         submitBtn.addEventListener("click", (e) => {
             e.preventDefault()
-            if (editForm.reportValidity()) {
+            if (this.editForm.reportValidity()) {
                 this.div.remove()
-                this.obj.edit(new FormData(editForm))
+                this.obj.edit(new FormData(this.editForm))
             }
             
         })
@@ -126,10 +126,10 @@ class Card {
         
         buttonsDiv.appendChild(submitBtn);
         buttonsDiv.appendChild(cancelBtn);
-        editForm.appendChild(titleInput);
-        editForm.appendChild(descInput);
-        editForm.appendChild(buttonsDiv);
-        this.div.appendChild(editForm);
+        this.editForm.appendChild(this.titleInput);
+        this.editForm.appendChild(descInput);
+        this.editForm.appendChild(buttonsDiv);
+        this.div.appendChild(this.editForm);
     }
 
     getElement() {
@@ -156,7 +156,34 @@ export class TaskCard extends Card {
         this.editBtn.addEventListener("click", () => this.editTaskCard())
     }
     editTaskCard() {
-        super.edit()
+        super.edit();
+        const editHeader = document.createElement("div");
+        const dueDate = document.createElement("input");
+        const priorities = document.createElement("div");
+
+        dueDate.name = "date";
+        dueDate.type = "datetime-local";
+        for (let n of ["urgent", "important", "mild"]) {
+            const input = document.createElement("input");
+            const label = document.createElement("label");
+
+            input.name = "priority";
+            input.id = n;
+            input.value = n;
+            input.type = n;
+            label.textContent = n;
+            if (this.div.classList.contains(n)) input.checked = true
+
+            priorities.appendChild(label)
+            priorities.appendChild(input);
+        }
+
+        editHeader.className = "edit-header";
+        editHeader.appendChild(this.titleInput);
+        editHeader.appendChild(dueDate);
+        editHeader.appendChild(priorities);
+        this.editForm.insertBefore(editHeader, this.editForm.firstChild);
+
     }
 
     createTaskSpecific() {
