@@ -75,15 +75,15 @@ class Card {
     }
 
     createCard() {
-        const title = document.createElement("h2");
+        this.title = document.createElement("h2");
         const desc = document.createElement("p");
         
-        title.textContent = this.obj.title;
+        this.title.textContent = this.obj.title;
         desc.textContent = this.obj.description;
         this.editBtn.textContent = "Edit";
         this.editBtn.className = "edit-btn"
 
-        this.div.appendChild(title);
+        this.div.appendChild(this.title);
         this.div.appendChild(desc);
         this.div.appendChild(this.editBtn);
     }
