@@ -3,14 +3,13 @@ import PubSub from "pubsub-js";
 import { projectList } from ".";
 const content = document.querySelector(".content")
 
-export function createNav() {
+export function createFixedNavs() {
     const nav = document.querySelector("nav");
     let cards = [];
-    for (let n of ["Projects", "Today", "By Importance", "By Date", "By Creation"]) {
+    for (let n of ["Tasks", "ToDo", "Done", "Projects"]) {
         const card = document.createElement("div")
         card.classList.add("card")
-        if (n == "Projects") card.classList.add("projects")
-        else card.classList.add("tasks")
+        card.classList.add(n.toLocaleLowerCase())
         card.textContent = n;
         cards.push(card);
         nav.appendChild(card);
@@ -197,7 +196,7 @@ export class TaskCard extends Card {
         everyDayInput.name = "every-day";
         everyDayInput.value = true;
         everyDayLabel.className = "every-day";
-        everyDayLabel.textContent = "Every Day";
+        everyDayLabel.textContent = "Today";
         everyDayLabel.setAttribute("for", "every-day");
 
         priorities.className = "priorities";
@@ -418,7 +417,6 @@ export class Listing {
         this.title = title;
     }
     project() {
-        document.querySelector(".projects-lst").textContent = "";
         const main = document.createElement("div");
         const titleEle = document.createElement("h1");
         const list = document.createElement("div");
@@ -431,7 +429,6 @@ export class Listing {
         return list
     }
     task() {
-        document.querySelector(".tasks-lst").textContent = "";
         const main = document.createElement("div");
         const titleEle = document.createElement("h1");
         const list = document.createElement("div");
@@ -442,5 +439,11 @@ export class Listing {
         document.querySelector(".tasks-lst").appendChild(main)
         list.className = "task-list"
         return list
+    }
+    clearProjects() {
+        document.querySelector(".projects-lst").textContent = "";
+    }
+    clearTasks() {
+        document.querySelector(".tasks-lst").textContent = "";
     }
 }

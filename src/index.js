@@ -1,6 +1,6 @@
 import "./styles.css"
 import PubSub from "pubsub-js";
-import { createNav, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load";
+import { createFixedNavs, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load";
 import { nextDay } from "date-fns";
 
 export let taskList = {};
@@ -13,20 +13,36 @@ const ListingController = (function () {
         const listing = new Listing(oldTitle)
         return listing;
     };
-    function project() {
-        const list = common("Projects").project()
-        for (let n of Object.values(projectList)) {
-            list.appendChild(n.card.getElement())
+    function project(objList) {
+        const listing = common("Projects")
+        listing.clearProjects()
+        const insertList = listing.project()
+        for (let n of objList) {
+            insertList.appendChild(n.card.getElement())
         }
     };
-    function byCreation() {
-        const list = common("Tasks").task();
-        for (let n of Object.values(taskList)) {
-            list.appendChild(n.card.getElement())
+    function task(objList) {
+        const listing = common("Tasks");
+        listing.clearTasks()
+        const insertList = listing.task();
+        for (let n of objList) {
+            insertList.appendChild(n.card.getElement())
         }
     };
-    return { project, byCreation }
+    return { project, task }
 })()
+
+class Sorting {
+    static getAll(list) {
+        return Object.values(list)
+    }
+    static getDone(list) {
+        return Object.values(list).filter(n => n.checked)
+    }
+    static getToDo(list) {
+        return Object.values(list).filter(n => !n.checked)
+    }
+}
 
 class Task {
     static nextId = 0;
@@ -91,7 +107,7 @@ class Project {
 //Project for all generic tasks
 const defaultProject = new Project(true);
 
-function assignNavCards() {
+function assignFixedNavCards() {
     const cards = document.querySelectorAll("nav .card");
     for (let n of cards) {
         n.addEventListener("click", (e) => {
@@ -99,15 +115,24 @@ function assignNavCards() {
             e.target.classList.add("act")
             if (e.target.classList.contains("projects")) {
                 Layout.createProjectsLayout();
-                Buttons.assignProject(ListingController.project);
-                ListingController.project();
+                Buttons.assignProject(() => ListingController.project(Sorting.getAll(projectList)));
+                ListingController.project(Sorting.getAll(projectList));
             }
+            else if (e.target.classList.contains("todo")) {
+                Layout.createTasksLayout();
+                Buttons.assignTask(() => ListingController.task(Sorting.getToDo(taskList)));
+                ListingController.task(Sorting.getToDo(taskList));
+            }
+            else if (e.target.classList.contains("done")) {
+                Layout.createTasksLayout();
+                Buttons.assignTask(() => ListingController.task(Sorting.getDone(taskList)));
+                ListingController.task(Sorting.getDone(taskList));
+             }
             else {
                 Layout.createTasksLayout();
-                Buttons.assignTask(ListingController.byCreation);
-                ListingController.byCreation();
+                Buttons.assignTask(() => ListingController.task(Sorting.getAll(taskList)));
+                ListingController.task(Sorting.getAll(taskList));
             }
-            
         })
     }
 }
@@ -123,7 +148,7 @@ class MakeNew {
         if (formData) {
             let project = new Project()
             project.edit(formData, listingFunct);
-            ListingController.project()
+            listingFunct()
         }
         stop.remove()  
     }
@@ -137,7 +162,7 @@ class MakeNew {
         if (formData) {
             let task = new Task();
             task.edit(formData, listingFunct);
-            ListingController.byCreation()
+            listingFunct()
         }
         stop.remove()  
     }
@@ -185,7 +210,7 @@ const Buttons = (function () {
 })()
 
 
-createNav()
-assignNavCards()
+createFixedNavs()
+assignFixedNavCards()
 document.querySelector(".card.projects").click()
 
