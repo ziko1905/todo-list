@@ -16,7 +16,6 @@ const ListingController = (function () {
     function project() {
         const list = common("Projects").project()
         for (let n of Object.values(projectList)) {
-            console.log(Object.values(projectList));
             list.appendChild(n.card.getElement())
         }
     };
@@ -44,7 +43,6 @@ class Task {
             this.date = formData.get("every-day") ? "E" : formData.get("date") ? formData.get("date") : "E";
             this.priority = formData.get("priority");
             this.project = formData.get("project") ? projectList[formData.get("project")] : defaultProject; 
-            console.log(this.project);
         }
         this.project.tasks[this.id] = this;
         this.card = new TaskCard(this, funct);
@@ -53,7 +51,6 @@ class Task {
     triggerCheck() {
         this.checked = !this.checked;
         this.card.listingFunct();
-        console.log(this);
     }
 }
 
