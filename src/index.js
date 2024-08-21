@@ -21,12 +21,14 @@ const ListingController = (function () {
             insertList.appendChild(n.card.getElement())
         }
     };
-    function task(objList) {
+    function task(objList, sortAlg) {
+        objList = sortAlg(objList);
         const listing = common("Tasks");
         listing.clearTasks()
         const insertList = listing.task();
         for (let n of objList) {
             insertList.appendChild(n.card.getElement())
+            n.card.listingFunct = () => ListingController.task(objList, sortAlg)
         }
     };
     return { project, task }
@@ -120,18 +122,18 @@ function assignFixedNavCards() {
             }
             else if (e.target.classList.contains("todo")) {
                 Layout.createTasksLayout();
-                Buttons.assignTask(() => ListingController.task(Sorting.getToDo(taskList)));
-                ListingController.task(Sorting.getToDo(taskList));
+                Buttons.assignTask(() => ListingController.task(taskList, Sorting.getToDo));
+                ListingController.task(taskList, Sorting.getToDo);
             }
             else if (e.target.classList.contains("done")) {
                 Layout.createTasksLayout();
-                Buttons.assignTask(() => ListingController.task(Sorting.getDone(taskList)));
-                ListingController.task(Sorting.getDone(taskList));
+                Buttons.assignTask(() => ListingController.task(taskList, Sorting.getDone));
+                ListingController.task(taskList, Sorting.getDone);
              }
             else {
                 Layout.createTasksLayout();
-                Buttons.assignTask(() => ListingController.task(Sorting.getAll(taskList)));
-                ListingController.task(Sorting.getAll(taskList));
+                Buttons.assignTask(() => ListingController.task(taskList, Sorting.getAll));
+                ListingController.task(taskList, Sorting.getAll);
             }
         })
     }
