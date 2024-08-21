@@ -70,6 +70,7 @@ class Card {
     constructor(obj, listingFunct) {
         this.div = document.createElement("div");
         this.obj = obj;
+        this.div.classList.add(this.obj.id);
         this.listingFunct = listingFunct;
         this.editBtn = document.createElement("button")
         this.selectRemovalBtn = document.createElement("button");
@@ -150,7 +151,7 @@ class Card {
 export class ProjectCard extends Card {
     constructor(project, listingFunct) {
         super(project, listingFunct)
-        this.div.className = "project-card";
+        this.div.classList.add("project-card");
         this.editBtn.addEventListener("click", () => this.editProjectCard())
         this.createSmallerCard()
     }
@@ -173,7 +174,7 @@ export class ProjectCard extends Card {
 export class TaskCard extends Card {
     constructor(task, listingFunct) {
         super(task, listingFunct)
-        this.div.className = "task-card"
+        this.div.classList.add("task-card");
         this.createTaskSpecific();
         this.editBtn.addEventListener("click", () => this.editTaskCard())
     }
@@ -251,6 +252,7 @@ export class TaskCard extends Card {
         this.div.insertBefore(header, this.div.firstChild);
     }
     check() {
+        this.div.classList.remove("remove");
         this.div.classList.toggle("done");
         this.obj.triggerCheck()
     }
