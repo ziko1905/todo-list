@@ -232,13 +232,16 @@ export class TaskCard extends Card {
         else dueDate.textContent += format(new Date(this.obj.date), "hh:mm dd.mm.yy");
         checkButton.className = "check-btn";
         this.div.setAttribute("data-projectName", this.obj.project.title ? `#${this.obj.project.title}` : "");
+        checkButton.addEventListener("click", () => this.check());
 
         header.appendChild(dueDate);
         header.appendChild(checkButton);
         header.appendChild(this.title);
         this.div.insertBefore(header, this.div.firstChild);
     }
-
+    check() {
+        this.div.classList.toggle("done");
+    }
 }
 
 export const PopUp = (function () {
