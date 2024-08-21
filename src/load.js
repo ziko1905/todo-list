@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import PubSub from "pubsub-js";
-import { projectList } from ".";
+import { ListingController, projectList, Sorting } from ".";
 const content = document.querySelector(".content")
 
 export function createFixedNavs() {
@@ -152,6 +152,11 @@ export class ProjectCard extends Card {
         super(project, listingFunct)
         this.div.classList.add("project-card");
         this.editBtn.addEventListener("click", () => this.editProjectCard())
+        const title = this.div.querySelector("h2");
+        title.addEventListener("click", () => {
+            Layout.createTasksLayout()
+            ListingController.task(this.obj.tasks, Sorting.getAll)
+        })
         this.createSmallerCard()
     }
     editProjectCard() {

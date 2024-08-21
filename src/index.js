@@ -6,7 +6,7 @@ import { nextDay } from "date-fns";
 export let taskList = {};
 export let projectList = {};
 
-const ListingController = (function () {
+export const ListingController = (function () {
     let oldTitle = null;
     function common(title) {
         oldTitle = title ? title : oldTitle;
@@ -31,10 +31,20 @@ const ListingController = (function () {
             n.card.listingFunct = () => ListingController.task(objList, sortAlg)
         }
     };
-    return { project, task }
+    function fromProject(objList, sortAlg) {
+        objList = sortAlg(objList);
+        const listing = common("Tasks");
+        listing.clearProjects()
+        const insertList = listing.task();
+        for (let n of objList) {
+            insertList.appendChild(n.card.getElement())
+            n.card.listingFunct = () => ListingController.task(objList, sortAlg)
+        }
+    }
+    return { project, task, fromProject }
 })()
 
-class Sorting {
+export class Sorting {
     static getAll(list) {
         return Object.values(list)
     }
@@ -214,5 +224,5 @@ const Buttons = (function () {
 
 createFixedNavs()
 assignFixedNavCards()
-document.querySelector(".card.projects").click()
+document.querySelector(".card.tasks").click()
 
