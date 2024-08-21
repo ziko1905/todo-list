@@ -86,6 +86,7 @@ class Card {
         this.editBtn.className = "edit-btn";
         this.selectRemovalBtn.textContent = "Select";
         this.selectRemovalBtn.className = "select-rm-btn";
+        this.selectRemovalBtn.addEventListener("click", () => this.selectForRemoval());
 
         this.div.appendChild(this.title);
         this.div.appendChild(desc);
@@ -139,6 +140,10 @@ class Card {
 
     getElement() {
         return this.div
+    }
+
+    selectForRemoval() {
+        this.div.classList.toggle("remove");
     }
 }
 
