@@ -241,6 +241,7 @@ export class TaskCard extends Card {
     }
     check() {
         this.div.classList.toggle("done");
+        this.obj.triggerCheck()
     }
 }
 

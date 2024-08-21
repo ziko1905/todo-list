@@ -43,9 +43,10 @@ class Task {
         this.card = new TaskCard(this, funct);
         funct()
     }
-    triggerChecked() {
+    triggerCheck() {
         this.checked = !this.checked;
-        this.card.listingFunct()
+        this.card.listingFunct();
+        console.log(this);
     }
 }
 
