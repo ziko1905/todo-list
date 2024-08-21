@@ -86,7 +86,10 @@ class Card {
         this.editBtn.className = "edit-btn";
         this.selectRemovalBtn.textContent = "Select";
         this.selectRemovalBtn.className = "select-rm-btn";
-        this.selectRemovalBtn.addEventListener("click", () => this.selectForRemoval());
+        this.selectRemovalBtn.addEventListener("click", (e) => {
+            e.stopPropagation()
+            this.selectForRemoval()
+        });
 
         this.div.appendChild(this.title);
         this.div.appendChild(desc);
@@ -102,6 +105,7 @@ class Card {
         const buttonsDiv = document.createElement("div");
         const submitBtn = document.createElement("button");
         const cancelBtn = document.createElement("button");
+        
 
         this.titleInput.setAttribute("placeholder", this.obj.title);
         this.titleInput.name = "title"
@@ -151,15 +155,20 @@ export class ProjectCard extends Card {
     constructor(project, listingFunct) {
         super(project, listingFunct)
         this.div.classList.add("project-card");
-        this.editBtn.addEventListener("click", () => this.editProjectCard())
+        this.editBtn.addEventListener("click", (e) => {
+            e.stopPropagation()
+            this.editProjectCard()
+        })
         const title = this.div.querySelector("h2");
-        title.addEventListener("click", () => {
+        this.listPrjTasks = () => {
             Layout.createTasksLayout()
             ListingController.task(this.obj.tasks, Sorting.getAll)
-        })
+        }
+        this.div.addEventListener("click", this.listPrjTasks)
         this.createSmallerCard()
     }
     editProjectCard() {
+        this.div.removeEventListener("click", this.listPrjTasks);
         super.edit()
     }
     createSmallerCard() {
