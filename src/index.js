@@ -1,9 +1,10 @@
 import "./styles.css"
 import PubSub from "pubsub-js";
 import { createNav, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load";
+import { nextDay } from "date-fns";
 
-export let taskList = [];
-export let projectList = [];
+export let taskList = {};
+export let projectList = {};
 
 const ListingController = (function () {
     let oldTitle = null;
@@ -14,13 +15,14 @@ const ListingController = (function () {
     };
     function project() {
         const list = common("Projects").project()
-        for (let n of projectList) {
+        for (let n of Object.values(projectList)) {
+            console.log(Object.values(projectList));
             list.appendChild(n.card.getElement())
         }
     };
     function byCreation() {
         const list = common("Tasks").task();
-        for (let n of taskList) {
+        for (let n of Object.values(taskList)) {
             list.appendChild(n.card.getElement())
         }
     };
@@ -28,8 +30,12 @@ const ListingController = (function () {
 })()
 
 class Task {
+    static nextId = 0;
     constructor() {
         this.checked = false;
+        this.id = Task.nextId;
+        Task.nextId++;
+        taskList[this.id] = this;
     }
     edit(formData, funct) {
         if (formData) {
@@ -40,6 +46,7 @@ class Task {
             this.project = formData.get("project") ? projectList[formData.get("project")] : defaultProject; 
             console.log(this.project);
         }
+        this.project.tasks[this.id] = this;
         this.card = new TaskCard(this, funct);
         funct()
     }
@@ -51,11 +58,13 @@ class Task {
 }
 
 class Project {
-    constructor(title, description, hide) {
-        this.title = title; 
-        this.description = description;
+    static nextId = 0;
+    constructor(hide) {
         this.hide = hide;
-        this.tasks = [];
+        this.tasks = {};
+        this.id = Project.nextId;
+        Project.nextId++
+        if (!this.hide) this.link()
     }
     edit(formData, funct) {
         if (formData) {
@@ -65,9 +74,13 @@ class Project {
         this.card = new ProjectCard(this, funct);
         funct()
     }
+    link() {
+        projectList[this.id] = this;
+    }
 }
 
-const defaultProject = new Project("Main", "This is main project for all generic tasks.", false);
+//Project for all generic tasks
+const defaultProject = new Project(true);
 
 function assignNavCards() {
     const cards = document.querySelectorAll("nav .card");
@@ -101,7 +114,6 @@ class MakeNew {
         if (formData) {
             let project = new Project()
             project.edit(formData, listingFunct);
-            projectList.push(project);
             ListingController.project()
         }
         stop.remove()  
@@ -116,7 +128,6 @@ class MakeNew {
         if (formData) {
             let task = new Task();
             task.edit(formData, listingFunct);
-            taskList.push(task);
             ListingController.byCreation()
         }
         stop.remove()  

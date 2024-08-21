@@ -72,6 +72,7 @@ class Card {
         this.obj = obj;
         this.listingFunct = listingFunct;
         this.editBtn = document.createElement("button")
+        this.selectRemovalBtn = document.createElement("button");
         this.createCard();
     }
 
@@ -82,11 +83,14 @@ class Card {
         this.title.textContent = this.obj.title;
         desc.textContent = this.obj.description;
         this.editBtn.textContent = "Edit";
-        this.editBtn.className = "edit-btn"
+        this.editBtn.className = "edit-btn";
+        this.selectRemovalBtn.textContent = "Select";
+        this.selectRemovalBtn.className = "select-rm-btn";
 
         this.div.appendChild(this.title);
         this.div.appendChild(desc);
         this.div.appendChild(this.editBtn);
+        this.div.appendChild(this.selectRemovalBtn);
     }
 
     edit() {
@@ -150,8 +154,10 @@ export class ProjectCard extends Card {
     }
     createSmallerCard() {
         this.smallerCard = this.div.cloneNode(true);
-        const smallerEditBtn = this.smallerCard.querySelector("button");
+        const smallerEditBtn = this.smallerCard.querySelector(".edit-btn");
+        const smallerSelecRm = this.smallerCard.querySelector(".select-rm-btn")
         smallerEditBtn.remove();
+        smallerSelecRm.remove()
     }
 
     getSmallerCard() {
@@ -364,7 +370,7 @@ export const PopUp = (function () {
             priorities.appendChild(priorityDiv);
         }
 
-        for (let n = 0; n < projectList.length; n++) {
+        for (let n = 0; n < Object.values(projectList).length; n++) {
             const label = document.createElement("label");
             const input = document.createElement("input");
 
@@ -372,8 +378,8 @@ export const PopUp = (function () {
             input.id = n;
             input.type = "radio";
             input.name = "project";
-            input.value = n;
-            label.appendChild(projectList[n].card.getSmallerCard())
+            input.value = Object.values(projectList)[n].id;
+            label.appendChild(Object.values(projectList)[n].card.getSmallerCard())
             projectsDiv.appendChild(input);
             projectsDiv.appendChild(label);
         }
