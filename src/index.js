@@ -52,6 +52,11 @@ class Task {
         this.checked = !this.checked;
         this.card.listingFunct();
     }
+    remove(direct) {
+        delete this.project.tasks[this.id]
+        delete taskList[this.id]
+        if (direct) this.card.listingFunct();
+    }
 }
 
 class Project {
@@ -73,6 +78,13 @@ class Project {
     }
     link() {
         projectList[this.id] = this;
+    }
+    remove() {
+        for (let n of Object.values(this.tasks)) {
+            n.remove()
+        }
+        delete projectList[this.id];
+        this.card.listingFunct()
     }
 }
 
@@ -140,6 +152,14 @@ const Buttons = (function () {
 
         newBtn.addEventListener("click", () => MakeNew.project(listingFunct));
         plusBtn.addEventListener("click",() => MakeNew.project(listingFunct));
+        removeBtn.addEventListener("click", () => {
+            const cards = document.querySelectorAll(".remove");
+            if (cards) {
+                for (let n of cards) {
+                    projectList[n.getAttribute("data-obj-id")].remove()
+                }
+            }        
+        })
     }
 
     function assignTask(listingFunct) {
@@ -149,6 +169,15 @@ const Buttons = (function () {
 
         newBtn.addEventListener("click", () => MakeNew.task(listingFunct));
         plusBtn.addEventListener("click", () => MakeNew.task(listingFunct));
+        removeBtn.addEventListener("click", () => {
+            const cards = document.querySelectorAll(".remove");
+            if (cards) {
+                for (let n of cards) {
+                    console.log(n);
+                    taskList[n.getAttribute("data-obj-id")].remove(true)
+                }
+            }    
+        })
 
     }
 

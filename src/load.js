@@ -70,7 +70,7 @@ class Card {
     constructor(obj, listingFunct) {
         this.div = document.createElement("div");
         this.obj = obj;
-        this.div.classList.add(this.obj.id);
+        this.div.setAttribute("data-obj-id", this.obj.id);
         this.listingFunct = listingFunct;
         this.editBtn = document.createElement("button")
         this.selectRemovalBtn = document.createElement("button");
