@@ -51,23 +51,6 @@ nav {
     border-bottom: 2px solid var(--secondary-clr);
 }
 
-#add {
-    box-sizing: border-box;
-    width: 80px;
-    height: 80px;
-    padding-bottom: 7px;
-    font-size: 4rem;
-    background-color: var(--secondary-clr);
-    color: var(--quaternary-clr);
-    border: none;
-    border-radius: 1000px;
-
-    position: absolute;
-    right: 40px;
-    bottom: 40px;
-    z-index: 0;
-}
-
 .content {
     height: 100svh;
     padding: 70px 150px 0 150px;

@@ -62,7 +62,11 @@ export const Layout = (function () {
 
         return listingDiv
     }
-    return { createProjectsLayout, createTasksLayout }
+    function removeButtons() {
+        content.querySelector(".new-btn").remove()
+        content.querySelector(".remove-btn").remove()
+    }
+    return { createProjectsLayout, createTasksLayout, removeButtons }
 })()
 
 class Card {
@@ -162,6 +166,7 @@ export class ProjectCard extends Card {
         const title = this.div.querySelector("h2");
         this.listPrjTasks = () => {
             Layout.createTasksLayout()
+            Layout.removeButtons()
             ListingController.task(this.obj.tasks, Sorting.getAll)
         }
         this.div.addEventListener("click", this.listPrjTasks)

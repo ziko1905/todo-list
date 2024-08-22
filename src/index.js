@@ -243,10 +243,8 @@ const Buttons = (function () {
     function assignProject(listingFunct) {
         const newBtn = document.querySelector(".new-btn");
         const removeBtn = document.querySelector(".remove-btn");
-        const plusBtn = document.querySelector("#add");
 
         newBtn.addEventListener("click", () => MakeNew.project(listingFunct));
-        plusBtn.addEventListener("click",() => MakeNew.project(listingFunct));
         removeBtn.addEventListener("click", () => {
             const cards = document.querySelectorAll(".remove");
             if (cards) {
@@ -260,10 +258,8 @@ const Buttons = (function () {
     function assignTask(listingFunct) {
         const newBtn = document.querySelector(".new-btn");
         const removeBtn = document.querySelector(".remove-btn");
-        const plusBtn = document.querySelector("#add");
 
         newBtn.addEventListener("click", () => MakeNew.task(listingFunct));
-        plusBtn.addEventListener("click", () => MakeNew.task(listingFunct));
         removeBtn.addEventListener("click", () => {
             const cards = document.querySelectorAll(".remove");
             if (cards) {
