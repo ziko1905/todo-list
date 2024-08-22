@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import PubSub from "pubsub-js";
 import { ListingController, projectList, Sorting } from ".";
 const content = document.querySelector(".content")
 
