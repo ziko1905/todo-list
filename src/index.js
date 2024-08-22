@@ -74,7 +74,6 @@ class Task {
             this.priority = formData.get("priority");
             if (formData.has("project")) this.project = formData.get("project") ? projectList[formData.get("project")] : projectList[0]; 
         }
-        console.log(this)
         this.project.tasks[this.id] = this;
         this.projectId = this.project.id;
         this.card = new TaskCard(this, funct);
@@ -107,7 +106,6 @@ class Task {
         return [this.title, this.description, this.date, this.priority, this.projectId, this.id, this.checked]
     }
     assignCard() {
-        console.log("Assign")
         this.card = new TaskCard(this, () => ListingController.task(taskList, Sorting.getAll))
         if (this.checked)
             this.card.check(true)
@@ -162,7 +160,6 @@ class Project {
 //Project for all generic tasks
 
 let defaultProject;
-console.log(localStorage.getItem("projects"));
 if (!localStorage.getItem("projects")) {
     defaultProject = new Project(true);
     projectList[0] = defaultProject;
@@ -261,7 +258,6 @@ const Buttons = (function () {
             const cards = document.querySelectorAll(".remove");
             if (cards) {
                 for (let n of cards) {
-                    console.log(n);
                     taskList[n.getAttribute("data-obj-id")].remove(true)
                 }
             }    
@@ -289,14 +285,12 @@ function loadStorage() {
             prj.create(...n)
         }
     }
-    console.log(projectList);
     if (localStorage.getItem("tasks")) {    
         for (let m of JSON.parse(localStorage.getItem("tasks"))) {
             let tsk = new Task();
             tsk.create(...m)
         }
     }
-    console.log(taskList);
     linkTaskProject()
     for (let tsk of Object.values(taskList)) tsk.assignCard()
     for (let prj of Object.values(projectList)) prj.assignCard()
@@ -305,9 +299,7 @@ function loadStorage() {
 
 function linkTaskProject() {
     for (let tsk of Object.values(taskList)) {
-        console.log(typeof tsk)
         tsk.project = projectList[tsk.projectId]
-        console.log(projectList)
         tsk.project.tasks[tsk.id] = tsk;
     }
 }
