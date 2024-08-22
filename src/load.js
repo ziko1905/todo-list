@@ -264,10 +264,10 @@ export class TaskCard extends Card {
         header.appendChild(this.title);
         this.div.insertBefore(header, this.div.firstChild);
     }
-    check() {
+    check(only) {
         this.div.classList.remove("remove");
         this.div.classList.toggle("done");
-        this.obj.triggerCheck()
+        if (!only) this.obj.triggerCheck()
     }
 }
 

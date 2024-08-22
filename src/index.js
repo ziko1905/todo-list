@@ -84,14 +84,15 @@ class Task {
     }
     triggerCheck() {
         this.checked = !this.checked;
-        this.card.listingFunct();
+        // this.card.listingFunct();
+        saveStorage()
     }
     remove(direct) {
         delete this.project.tasks[this.id]
         delete taskList[this.id]
         if (direct) this.card.listingFunct();
     }
-    create(title, description, date, priority, projectId, id) {
+    create(title, description, date, priority, projectId, id, checked) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -100,12 +101,16 @@ class Task {
         delete taskList[this.id]
         this.id = id;
         taskList[this.id] = this;
+        this.checked = checked;
     }
     save() {
-        return [this.title, this.description, this.date, this.priority, this.projectId, this.id]
+        return [this.title, this.description, this.date, this.priority, this.projectId, this.id, this.checked]
     }
     assignCard() {
-        this.card = new TaskCard(this, () => undefined)
+        console.log("Assign")
+        this.card = new TaskCard(this, () => ListingController.task(taskList, Sorting.getAll))
+        if (this.checked)
+            this.card.check(true)
     }
 }
 
