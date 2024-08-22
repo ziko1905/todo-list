@@ -390,7 +390,8 @@ export const PopUp = (function () {
             priorities.appendChild(priorityDiv);
         }
 
-        for (let n = 0; n < Object.values(projectList).length; n++) {
+        for (let n in projectList) {
+            if (n === "0") continue
             const label = document.createElement("label");
             const input = document.createElement("input");
 
@@ -398,8 +399,8 @@ export const PopUp = (function () {
             input.id = n;
             input.type = "radio";
             input.name = "project";
-            input.value = Object.values(projectList)[n].id;
-            label.appendChild(Object.values(projectList)[n].card.getSmallerCard())
+            input.value = projectList[n].id;
+            label.appendChild(projectList[n].card.getSmallerCard())
             projectsDiv.appendChild(input);
             projectsDiv.appendChild(label);
         }

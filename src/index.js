@@ -2,9 +2,12 @@ import "./styles.css"
 import PubSub from "pubsub-js";
 import { createFixedNavs, PopUp, Layout, Listing, ProjectCard, TaskCard } from "./load";
 import { nextDay } from "date-fns";
+import stringify from "json-stringify-safe";
 
 export let taskList = {};
 export let projectList = {};
+window.taskList = taskList;
+window.projectList = projectList;
 
 export const ListingController = (function () {
     let oldTitle = null;
@@ -18,7 +21,7 @@ export const ListingController = (function () {
         listing.clearProjects()
         const insertList = listing.project()
         for (let n of objList) {
-            insertList.appendChild(n.card.getElement())
+            if (n.id) insertList.appendChild(n.card.getElement())
         }
     };
     function task(objList, sortAlg) {
@@ -70,11 +73,14 @@ class Task {
             this.description = formData.get("description") ? formData.get("description") : this.description;
             this.date = formData.get("every-day") ? "E" : formData.get("date") ? formData.get("date") : "E";
             this.priority = formData.get("priority");
-            this.project = formData.get("project") ? projectList[formData.get("project")] : defaultProject; 
+            this.project = formData.get("project") ? projectList[formData.get("project")] : projectList[0]; 
         }
+        console.log(this)
         this.project.tasks[this.id] = this;
+        this.projectId = this.project.id;
         this.card = new TaskCard(this, funct);
         funct()
+        saveStorage()
     }
     triggerCheck() {
         this.checked = !this.checked;
@@ -84,6 +90,22 @@ class Task {
         delete this.project.tasks[this.id]
         delete taskList[this.id]
         if (direct) this.card.listingFunct();
+    }
+    create(title, description, date, priority, projectId, id) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.priority = priority;
+        this.projectId = projectId;
+        delete taskList[this.id]
+        this.id = id;
+        taskList[this.id] = this;
+    }
+    save() {
+        return [this.title, this.description, this.date, this.priority, this.projectId, this.id]
+    }
+    assignCard() {
+        this.card = new TaskCard(this, () => undefined)
     }
 }
 
@@ -103,6 +125,7 @@ class Project {
         }
         this.card = new ProjectCard(this, funct);
         funct()
+        saveStorage()
     }
     link() {
         projectList[this.id] = this;
@@ -114,10 +137,36 @@ class Project {
         delete projectList[this.id];
         this.card.listingFunct()
     }
+    create(title, description, id) {
+        this.title = title;
+        this.description = description;
+        delete projectList[this.id]
+        this.id = id;
+        this.tasks = {};
+        projectList[this.id] = this;
+    }
+    save() {
+        return [this.title, this.description, this.id]
+    }
+    assignCard() {
+        if (this.id != 0) this.card = new ProjectCard(this, () => undefined)
+    }
 }
 
 //Project for all generic tasks
-const defaultProject = new Project(true);
+
+let defaultProject;
+console.log(localStorage.getItem("projects"));
+if (!localStorage.getItem("projects")) {
+    defaultProject = new Project(true);
+    projectList[0] = defaultProject;
+    }
+else {
+    defaultProject = projectList[0];
+}
+
+loadStorage()
+
 
 function assignFixedNavCards() {
     const cards = document.querySelectorAll("nav .card");
@@ -221,6 +270,45 @@ const Buttons = (function () {
     return { assignProject, assignTask }
 })()
 
+function saveStorage() {
+    if (projectList) localStorage.setItem("projects", JSON.stringify(Object.values(projectList).map((n) => n.save())));
+    if (taskList) localStorage.setItem("tasks", JSON.stringify(Object.values(taskList).map((m) => m.save())));
+    if (Project.nextId) localStorage.setItem("projectNextId", JSON.stringify(Project.nextId));
+    if (Task.nextId) localStorage.setItem("taskNextId", JSON.stringify(Task.nextId));
+}
+
+function loadStorage() {
+    if (localStorage.getItem("projectNextId")) Project.nextId = localStorage.getItem("projectNextId");
+    if (localStorage.getItem("taskNextId")) Task.nextId = localStorage.getItem("taskNextId");
+    
+    if (localStorage.getItem("projects")) {    
+        for (let n of JSON.parse(localStorage.getItem("projects"))) {
+            let prj = new Project();
+            prj.create(...n)
+        }
+    }
+    console.log(projectList);
+    if (localStorage.getItem("tasks")) {    
+        for (let m of JSON.parse(localStorage.getItem("tasks"))) {
+            let tsk = new Task();
+            tsk.create(...m)
+        }
+    }
+    console.log(taskList);
+    linkTaskProject()
+    for (let tsk of Object.values(taskList)) tsk.assignCard()
+    for (let prj of Object.values(projectList)) prj.assignCard()
+
+}
+
+function linkTaskProject() {
+    for (let tsk of Object.values(taskList)) {
+        console.log(typeof tsk)
+        tsk.project = projectList[tsk.projectId]
+        console.log(projectList)
+        tsk.project.tasks[tsk.id] = tsk;
+    }
+}
 
 createFixedNavs()
 assignFixedNavCards()
