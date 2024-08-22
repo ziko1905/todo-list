@@ -73,6 +73,7 @@ class Task {
             this.date = formData.get("every-day") ? "E" : formData.get("date") ? formData.get("date") : "E";
             this.priority = formData.get("priority");
             if (formData.has("project")) this.project = formData.get("project") ? projectList[formData.get("project")] : projectList[0]; 
+            console.log(this.project)
         }
         this.project.tasks[this.id] = this;
         this.projectId = this.project.id;

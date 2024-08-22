@@ -395,7 +395,6 @@ export const PopUp = (function () {
         }
 
         for (let n in projectList) {
-            if (n === "0") continue
             const label = document.createElement("label");
             const input = document.createElement("input");
 
@@ -404,7 +403,11 @@ export const PopUp = (function () {
             input.type = "radio";
             input.name = "project";
             input.value = projectList[n].id;
-            label.appendChild(projectList[n].card.getSmallerCard())
+            if (n === "0") {
+                input.checked = true;
+                label.style.display = "none";
+            }
+            else label.appendChild(projectList[n].card.getSmallerCard())
             projectsDiv.appendChild(input);
             projectsDiv.appendChild(label);
         }
