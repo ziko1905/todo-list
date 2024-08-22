@@ -22,6 +22,8 @@ export const ListingController = (function () {
         const insertList = listing.project()
         for (let n of objList) {
             if (n.id) insertList.appendChild(n.card.getElement())
+            else continue
+            n.card.listingFunct = () => project(Sorting.getAll(projectList))
         }
     };
     function task(objList, sortAlg) {
@@ -31,7 +33,7 @@ export const ListingController = (function () {
         const insertList = listing.task();
         for (let n of objList) {
             insertList.appendChild(n.card.getElement())
-            n.card.listingFunct = () => ListingController.task(objList, sortAlg)
+            n.card.listingFunct = () => ListingController.task(taskList, sortAlg)
         }
     };
     function fromProject(objList, sortAlg) {
@@ -84,13 +86,14 @@ class Task {
     }
     triggerCheck() {
         this.checked = !this.checked;
-        // this.card.listingFunct();
+        this.card.listingFunct();
         saveStorage()
     }
     remove(direct) {
         delete this.project.tasks[this.id]
         delete taskList[this.id]
         if (direct) this.card.listingFunct();
+        saveStorage()
     }
     create(title, description, date, priority, projectId, id, checked) {
         this.title = title;
@@ -141,6 +144,7 @@ class Project {
         }
         delete projectList[this.id];
         this.card.listingFunct()
+        saveStorage()
     }
     create(title, description, id) {
         this.title = title;
@@ -154,7 +158,7 @@ class Project {
         return [this.title, this.description, this.id]
     }
     assignCard() {
-        if (this.id != 0) this.card = new ProjectCard(this, () => undefined)
+        if (this.id != 0) this.card = new ProjectCard(this, () => ListingController.project(Sorting.getAll(projectList)))
     }
 }
 
